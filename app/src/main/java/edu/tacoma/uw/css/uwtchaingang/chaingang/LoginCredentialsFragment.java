@@ -13,16 +13,18 @@ import android.widget.Button;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OnLoginFragmentInteractionListener} interface
+ * {@link OnLoginCredentialsFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link LoginFragment#newInstance} factory method to
+ * Use the {@link LoginCredentialsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginFragment extends Fragment {
+public class LoginCredentialsFragment extends Fragment {
 
-    private OnLoginFragmentInteractionListener mListener;
 
-    public LoginFragment() {
+
+    private OnLoginCredentialsFragmentInteractionListener mListener;
+
+    public LoginCredentialsFragment() {
         // Required empty public constructor
     }
 
@@ -30,12 +32,15 @@ public class LoginFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment LoginFragment.
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment LoginCredentialsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LoginFragment newInstance(String param1, String param2) {
-        LoginFragment fragment = new LoginFragment();
+    public static LoginCredentialsFragment newInstance(String param1, String param2) {
+        LoginCredentialsFragment fragment = new LoginCredentialsFragment();
         Bundle args = new Bundle();
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,7 +48,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
 
         }
@@ -53,19 +57,13 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        Button newMemberButton = (Button) view.findViewById(R.id.create_account_btn);
-        newMemberButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.launchAddNewMember();
-            }
-        });
-        Button loginCredentials = (Button) view.findViewById(R.id.login_btn);
+        View view = inflater.inflate(R.layout.fragment_login_credentials, container, false);
+        Button loginCredentials = (Button) view.findViewById(R.id.login_btn_credentials);
         loginCredentials.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((LoginActivity)getActivity()).launchLoginCredentials();
+                //do logic for authentication
+
             }
         });
 
@@ -75,18 +73,18 @@ public class LoginFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.launchAddNewMember();
+            mListener.launchLoginCredentials();
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnLoginFragmentInteractionListener) {
-            mListener = (OnLoginFragmentInteractionListener) context;
+        if (context instanceof OnLoginCredentialsFragmentInteractionListener) {
+            mListener = (OnLoginCredentialsFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnLoginFragmentInteractionListener");
+                    + " must implement OnLoginCredentialsFragmentInteractionListener");
         }
     }
 
@@ -95,7 +93,6 @@ public class LoginFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
 
     /**
      * This interface must be implemented by activities that contain this
@@ -107,8 +104,8 @@ public class LoginFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnLoginFragmentInteractionListener {
+    public interface OnLoginCredentialsFragmentInteractionListener {
         // TODO: Update argument type and name
-        void launchAddNewMember();
+        void launchLoginCredentials();
     }
 }

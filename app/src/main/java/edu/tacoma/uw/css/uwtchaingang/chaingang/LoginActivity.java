@@ -8,7 +8,8 @@ import android.widget.Button;
 
 public class LoginActivity extends AppCompatActivity
         implements LoginFragment.OnLoginFragmentInteractionListener,
-        MemberAddEditFragment.OnAddEditInteractionListener {
+        MemberAddEditFragment.OnAddEditInteractionListener,
+        LoginCredentialsFragment.OnLoginCredentialsFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,16 @@ public class LoginActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.login_fragment_container,new MemberAddEditFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void launchLoginCredentials() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.login_fragment_container,new LoginCredentialsFragment())
+                .addToBackStack(null)
                 .commit();
     }
 }
