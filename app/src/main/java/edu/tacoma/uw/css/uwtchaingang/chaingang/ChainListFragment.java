@@ -105,7 +105,7 @@ public class ChainListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnChainListFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         void onChainListFragmentInteraction(Chain chain);
     }
 }

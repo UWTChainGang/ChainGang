@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 
 /**
@@ -20,7 +21,8 @@ import android.widget.Button;
  */
 public class LoginCredentialsFragment extends Fragment {
 
-
+    private EditText mMemberEmail;
+    private EditText mMemberPassword;
 
     private OnLoginCredentialsFragmentInteractionListener mListener;
 
@@ -58,12 +60,14 @@ public class LoginCredentialsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login_credentials, container, false);
+        mMemberEmail = (EditText) view.findViewById(R.id.email_credentials);
+        mMemberPassword = (EditText) view.findViewById(R.id.password_credentials);
         Button loginCredentials = (Button) view.findViewById(R.id.login_btn_credentials);
         loginCredentials.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //do logic for authentication
-
+                ((LoginActivity)getActivity()).validateCredentials(mMemberEmail.getText().toString(), mMemberPassword.getText().toString());
             }
         });
 
@@ -105,7 +109,8 @@ public class LoginCredentialsFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnLoginCredentialsFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         void launchLoginCredentials();
+        void validateCredentials(String memberEmail, String memberPassword);
     }
 }
