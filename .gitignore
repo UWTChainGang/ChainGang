@@ -20,6 +20,8 @@ local.properties
 
 # User-specific configurations
 .idea/libraries/
+.idea/caches/
+.idea/codeStyles/
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/.name
@@ -30,6 +32,8 @@ local.properties
 .idea/modules.xml
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
+.idea/runConfigurations.xml
+.idea/gradle.xml
 *.iml
 
 # OS-specific files
