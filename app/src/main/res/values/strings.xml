@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">ChainGang</string>
+    <string name="txt_slogan">A hub for managing\nyour complex processes.</string>
+    <string name="txt_t_and_c">Terms and Conditions</string>
+    <string name="logo_description">Logo</string>
+
+    <string name="btn_login">Login</string>
+    <string name="btn_create_account">Create Account</string>
+    <string name="btn_create_account_caps">CREATE ACCOUNT</string>
+    <string name="btn_submit_changes_caps">SUBMIT CHANGES</string>
+
+    <string name="txt_create_account">Create an Account</string>
+    <string name="txt_edit_account_details">Edit Account Details</string>
+    <string name="txt_fname">First Name</string>
+    <string name="txt_lname">Last Name</string>
+    <string name="txt_email">Email</string>
+    <string name="txt_password">Password</string>
+    <string name="txt_pass_confirm">Confirm Password</string>
+
+    <string name="txt_chains">Chains</string>
+    <string name="txt_search">Confirm Password</string>
+    <string name="txt_sample_chain">Sample Chain</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 </resources>
