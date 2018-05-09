@@ -1,45 +1,44 @@
 package edu.tacoma.uw.css.uwtchaingang.chaingang;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import chain.Chain;
 
-
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnChainListFragmentInteractionListener}
- * interface.
  */
 public class ChainListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+    private static final String chainURL = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/chains";
     private int mColumnCount = 1;
-
-    private List<Chain> mChainList;
     private OnChainListFragmentInteractionListener mListener;
+    private List<Chain> mChainList;
+    private RecyclerView mRecyclerView;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ChainListFragment() {
+
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static ChainListFragment newInstance(int columnCount) {
         ChainListFragment fragment = new ChainListFragment();
         Bundle args = new Bundle();
@@ -48,10 +47,11 @@ public class ChainListFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.i("ChainListFragment", "onCreate Called from class: ChainListFragment.java");
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -65,17 +65,18 @@ public class ChainListFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            mRecyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyChainRecyclerViewAdapter(mChainList, mListener));
+            ChainAsyncTask courseAsyncTask = new ChainAsyncTask();
+            courseAsyncTask.execute(new String[]{chainURL});
+            Log.i("AdapterTag", "RecyclerView Launched");
         }
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -108,4 +109,66 @@ public class ChainListFragment extends Fragment {
 
         void onChainListFragmentInteraction(Chain chain);
     }
+
+    private class ChainAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            Log.i("", "Doinbackground");
+            String response = "";
+            HttpURLConnection urlConnection = null;
+
+            for (String url : urls) {
+                try {
+                    URL urlObject = new URL(url);
+                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+
+
+
+                    InputStream content = urlConnection.getInputStream();
+
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                    String s = "";
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+
+                } catch (Exception e) {
+                    response = "Unable to download the list of Chains, Reason: "
+                            + e.getMessage();
+                }
+                finally {
+                    if (urlConnection != null)
+                        urlConnection.disconnect();
+                }
+            }
+            Log.i("Async Task Tag", "doInBackground: " + response);
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.i("", "onPostExecute");
+
+            if (result.startsWith("Unable to")) {
+                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+                        .show();
+                return;
+            }
+            try {
+                mChainList = Chain.parseChainJSON(result);
+            }
+            catch (JSONException e) {
+                Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG)
+                        .show();
+                return;
+            }
+            // Everything is good, show the list of courses.
+            if (!mChainList.isEmpty()) {
+                mRecyclerView.setAdapter(new MyChainRecyclerViewAdapter(mChainList, mListener));
+            }
+        }
+
+    }
+
 }

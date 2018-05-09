@@ -19,7 +19,10 @@ public class ChainActivity extends AppCompatActivity
         setContentView(R.layout.activity_chain);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        ChainListFragment chainListFragment = new ChainListFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.chain_container, chainListFragment)
+                .commit();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
