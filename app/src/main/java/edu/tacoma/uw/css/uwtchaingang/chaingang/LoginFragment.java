@@ -7,30 +7,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.Button;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OnAddEditInteractionListener} interface
+ * {@link OnLoginFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MemberAddEditFragment#newInstance} factory method to
+ * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MemberAddEditFragment extends Fragment {
-    private final static String MEMBER_ADD_EDIT_FRAG = "MemberAddFragment: ";
-    private final static String MEMEBER_ADD_URL
-            = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/users/?";//user=someusername&password=somepassword"
-    private EditText mFName;
-    private EditText mLName;
-    private EditText mEmail;
-    private EditText mPassword;
-    private EditText mPasswordConfirm;
+public class LoginFragment extends Fragment {
 
-    private OnAddEditInteractionListener mListener;
+    private OnLoginFragmentInteractionListener mListener;
 
-    public MemberAddEditFragment() {
+    public LoginFragment() {
         // Required empty public constructor
     }
 
@@ -38,11 +30,11 @@ public class MemberAddEditFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment MemberAddEditFragment.
+     * @return A new instance of fragment LoginFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MemberAddEditFragment newInstance(String param1, String param2) {
-        MemberAddEditFragment fragment = new MemberAddEditFragment();
+    public static LoginFragment newInstance(String param1, String param2) {
+        LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -51,6 +43,7 @@ public class MemberAddEditFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
 
         }
@@ -60,24 +53,33 @@ public class MemberAddEditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_member_add_edit, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        Button newMemberButton = (Button) view.findViewById(R.id.create_account_btn);
+        newMemberButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.launchAddNewMember();
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(String uri) {
+    public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.addEditMember(uri);
+            mListener.launchAddNewMember();
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnAddEditInteractionListener) {
-            mListener = (OnAddEditInteractionListener) context;
+        if (context instanceof OnLoginFragmentInteractionListener) {
+            mListener = (OnLoginFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnAddEditInteractionListener");
+                    + " must implement OnLoginFragmentInteractionListener");
         }
     }
 
@@ -97,8 +99,8 @@ public class MemberAddEditFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnAddEditInteractionListener {
-
-        void addEditMember(String url);
+    public interface OnLoginFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void launchAddNewMember();
     }
 }
