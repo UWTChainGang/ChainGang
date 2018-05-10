@@ -2,13 +2,29 @@ package edu.tacoma.uw.css.uwtchaingang.chaingang;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+
+import member.Member;
+
+import static android.support.constraint.Constraints.TAG;
 
 
 /**
@@ -21,8 +37,11 @@ import android.widget.EditText;
  */
 public class LoginCredentialsFragment extends Fragment {
 
+    private static final String MEMBER_AUTHENTICATE_URL = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/users/login/?";
+
     private EditText mMemberEmail;
     private EditText mMemberPassword;
+    private Member mMember;
 
     private OnLoginCredentialsFragmentInteractionListener mListener;
 
@@ -67,14 +86,15 @@ public class LoginCredentialsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //do logic for authentication
-                ((LoginActivity)getActivity()).validateCredentials(mMemberEmail.getText().toString(), mMemberPassword.getText().toString());
+                mListener.validateCredentials(buildMemberURL(v));
+
             }
         });
 
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.launchLoginCredentials();
@@ -98,6 +118,30 @@ public class LoginCredentialsFragment extends Fragment {
         mListener = null;
     }
 
+    private String buildMemberURL(View v) {
+
+        StringBuilder sb = new StringBuilder(MEMBER_AUTHENTICATE_URL);
+
+        try {
+
+            String email = mMemberEmail.getText().toString();
+            sb.append("user=");
+            sb.append(URLEncoder.encode(email, "UTF-8"));
+
+
+            String password = mMemberPassword.getText().toString();
+            sb.append("&password=");
+            sb.append(URLEncoder.encode(password, "UTF-8"));
+
+            Log.i(TAG, sb.toString());
+
+        }
+        catch(Exception e) {
+            Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
+                    .show();
+        }
+        return sb.toString();
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -111,6 +155,71 @@ public class LoginCredentialsFragment extends Fragment {
     public interface OnLoginCredentialsFragmentInteractionListener {
 
         void launchLoginCredentials();
-        void validateCredentials(String memberEmail, String memberPassword);
+        void validateCredentials(String url);
+        void launchChains();
     }
+
+    private class AuthenticateAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            Log.i("", "Doinbackground");
+            String response = "";
+            HttpURLConnection urlConnection = null;
+
+            for (String url : urls) {
+                try {
+                    URL urlObject = new URL(url);
+                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+
+
+
+                    InputStream content = urlConnection.getInputStream();
+
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                    String s = "";
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+
+                } catch (Exception e) {
+                    response = "Unable to download the list of Chains, Reason: "
+                            + e.getMessage();
+                }
+                finally {
+                    if (urlConnection != null)
+                        urlConnection.disconnect();
+                }
+            }
+            Log.i("Async Task Tag", "doInBackground: " + response);
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.i("", "onPostExecute");
+
+            if (result.startsWith("Unable to")) {
+                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
+                        .show();
+                return;
+            }
+            try {
+                mMember = Member.parseMemberJSON(result);
+            }
+            catch (JSONException e) {
+                Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG)
+                        .show();
+                return;
+            }
+            // Everything is good, lets see the chains
+            if ((mMember != null) && mMember.getmStatus().equals(Member.USER_AUTHENTICATED)) {
+                mListener.launchChains();
+            } else {// or do it again if not authenticated
+                mListener.launchLoginCredentials();
+            }
+        }
+
+    }
+
 }
