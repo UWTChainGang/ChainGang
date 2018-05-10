@@ -2,13 +2,29 @@ package edu.tacoma.uw.css.uwtchaingang.chaingang;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+
+import member.Member;
+
+import static android.support.constraint.Constraints.TAG;
 
 
 /**
@@ -21,8 +37,11 @@ import android.widget.EditText;
  */
 public class LoginCredentialsFragment extends Fragment {
 
+    private static final String MEMBER_AUTHENTICATE_URL = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/users/login/?";
+
     private EditText mMemberEmail;
     private EditText mMemberPassword;
+
 
     private OnLoginCredentialsFragmentInteractionListener mListener;
 
@@ -67,14 +86,15 @@ public class LoginCredentialsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //do logic for authentication
-                ((LoginActivity)getActivity()).validateCredentials(mMemberEmail.getText().toString(), mMemberPassword.getText().toString());
+                mListener.validateCredentials(buildMemberURL(v));
+
             }
         });
 
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.launchLoginCredentials();
@@ -98,6 +118,30 @@ public class LoginCredentialsFragment extends Fragment {
         mListener = null;
     }
 
+    private String buildMemberURL(View v) {
+
+        StringBuilder sb = new StringBuilder(MEMBER_AUTHENTICATE_URL);
+
+        try {
+
+            String email = mMemberEmail.getText().toString();
+            sb.append("user=");
+            sb.append(URLEncoder.encode(email, "UTF-8"));
+
+
+            String password = mMemberPassword.getText().toString();
+            sb.append("&password=");
+            sb.append(URLEncoder.encode(password, "UTF-8"));
+
+            Log.i(TAG, sb.toString());
+
+        }
+        catch(Exception e) {
+            Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
+                    .show();
+        }
+        return sb.toString();
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -111,6 +155,9 @@ public class LoginCredentialsFragment extends Fragment {
     public interface OnLoginCredentialsFragmentInteractionListener {
 
         void launchLoginCredentials();
-        void validateCredentials(String memberEmail, String memberPassword);
+        void validateCredentials(String url);
+        void launchChains();
     }
+
+
 }
