@@ -1,5 +1,7 @@
 package member;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,20 +37,16 @@ public class Member {
         this.mStatus = mIsAuthorized;
     }
 
-    public static Member parseMemberJSON(String chainJSON) throws JSONException {
-        List<Member> memberList = new ArrayList<Member>();
-        if (chainJSON != null) {
-            JSONArray arr = new JSONArray(chainJSON);
-            for (int i = 0; i < arr.length(); i++) {
-                JSONObject obj = arr.getJSONObject(i);
-                Member member = new Member(obj.getString(Member.STATUS));
-
-                memberList.add(member);
-            }
-
+    public static String parseMemberJSON(String memberJSON) throws JSONException {
+        String memberStatus = Member.USER_DOES_NOT_EXIST;
+        Log.i("Member","in Parse JSON");
+        if (memberJSON != null) {
+            JSONArray arr = new JSONArray(memberJSON);
+            JSONObject obj = arr.getJSONObject(0);
+            memberStatus = obj.getString(Member.STATUS);
         }
 
-        return memberList.get(0);
+        return memberStatus;
     }
 
 

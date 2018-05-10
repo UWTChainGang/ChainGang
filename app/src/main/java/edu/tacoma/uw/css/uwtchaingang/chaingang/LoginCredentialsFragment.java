@@ -41,7 +41,7 @@ public class LoginCredentialsFragment extends Fragment {
 
     private EditText mMemberEmail;
     private EditText mMemberPassword;
-    private Member mMember;
+
 
     private OnLoginCredentialsFragmentInteractionListener mListener;
 
@@ -159,67 +159,5 @@ public class LoginCredentialsFragment extends Fragment {
         void launchChains();
     }
 
-    private class AuthenticateAsyncTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... urls) {
-            Log.i("", "Doinbackground");
-            String response = "";
-            HttpURLConnection urlConnection = null;
-
-            for (String url : urls) {
-                try {
-                    URL urlObject = new URL(url);
-                    urlConnection = (HttpURLConnection) urlObject.openConnection();
-
-
-
-                    InputStream content = urlConnection.getInputStream();
-
-                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                    String s = "";
-                    while ((s = buffer.readLine()) != null) {
-                        response += s;
-                    }
-
-                } catch (Exception e) {
-                    response = "Unable to download the list of Chains, Reason: "
-                            + e.getMessage();
-                }
-                finally {
-                    if (urlConnection != null)
-                        urlConnection.disconnect();
-                }
-            }
-            Log.i("Async Task Tag", "doInBackground: " + response);
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Log.i("", "onPostExecute");
-
-            if (result.startsWith("Unable to")) {
-                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
-                        .show();
-                return;
-            }
-            try {
-                mMember = Member.parseMemberJSON(result);
-            }
-            catch (JSONException e) {
-                Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG)
-                        .show();
-                return;
-            }
-            // Everything is good, lets see the chains
-            if ((mMember != null) && mMember.getmStatus().equals(Member.USER_AUTHENTICATED)) {
-                mListener.launchChains();
-            } else {// or do it again if not authenticated
-                mListener.launchLoginCredentials();
-            }
-        }
-
-    }
 
 }

@@ -18,10 +18,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import member.Member;
+
 public class LoginActivity extends AppCompatActivity
         implements LoginFragment.OnLoginFragmentInteractionListener,
         MemberAddEditFragment.OnAddEditInteractionListener,
         LoginCredentialsFragment.OnLoginCredentialsFragmentInteractionListener {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,19 +119,23 @@ public class LoginActivity extends AppCompatActivity
          */
         @Override
         protected void onPostExecute(String result) {
-            // Something wrong with the network or the URL.
             try {
-                JSONObject jsonObject = new JSONObject(result);
-                String status = (String) jsonObject.get("result");
-                if (status.equals("success")) {
-                    Toast.makeText(getApplicationContext(), "Course successfully added!"
+;               String status = Member.parseMemberJSON(result);
+                if (status.equals(Member.USER_AUTHENTICATED)) {
+                    Toast.makeText(getApplicationContext(), "Login Success"
                             , Toast.LENGTH_LONG)
                             .show();
+                    launchChains();
+                } else if (status.equals(Member.USER_DOES_NOT_EXIST)){
+                    Toast.makeText(getApplicationContext(), "User not registered "
+                            , Toast.LENGTH_LONG)
+                            .show();
+                    launchLoginCredentials();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Failed to add: "
-                                    + jsonObject.get("error")
+                    Toast.makeText(getApplicationContext(), "Incorrect credential, Try again. "
                             , Toast.LENGTH_LONG)
                             .show();
+
                 }
             } catch (JSONException e) {
                 Toast.makeText(getApplicationContext(), "Something wrong with the data" +
