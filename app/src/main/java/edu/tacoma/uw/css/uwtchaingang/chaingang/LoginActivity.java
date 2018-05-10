@@ -39,7 +39,11 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     public void addEditMember(String url) {
+        AddMemberTask task = new AddMemberTask();
+        task.execute(new String[]{url.toString()});
 
+        // Takes you back to the previous fragment by popping the current fragment out.
+        getSupportFragmentManager().popBackStackImmediate();
     }
 
     @Override
@@ -120,7 +124,7 @@ public class LoginActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result) {
             try {
-;               String status = Member.parseMemberJSON(result);
+                String status = Member.parseMemberJSON(result);
                 if (status.equals(Member.USER_AUTHENTICATED)) {
                     Toast.makeText(getApplicationContext(), "Login Success"
                             , Toast.LENGTH_LONG)
@@ -135,7 +139,77 @@ public class LoginActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "Incorrect credential, Try again. "
                             , Toast.LENGTH_LONG)
                             .show();
+                    launchLoginCredentials();
 
+                }
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "Something wrong with the data" +
+                        e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+    ////////////////////
+
+    private class AddMemberTask extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String response = "";
+            HttpURLConnection urlConnection = null;
+            for (String url : urls) {
+                try {
+                    URL urlObject = new URL(url);
+                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+
+                    InputStream content = urlConnection.getInputStream();
+
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                    String s = "";
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+
+                } catch (Exception e) {
+                    response = "Unable to add course, Reason: "
+                            + e.getMessage();
+                } finally {
+                    if (urlConnection != null)
+                        urlConnection.disconnect();
+                }
+
+            }
+            return response;
+        }
+
+        /**
+         * It checks to see if there was a problem with the URL(Network) which is when an
+         * exception is caught. It tries to call the parse Method and checks to see if it was successful.
+         * If not, it displays the exception.
+         *
+         * @param result
+         */
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                String status = Member.parseMemberAddJSON(result);
+                if (status.equals(Member.SUCCESS)) {
+                    Toast.makeText(getApplicationContext(), "Operation Successful "
+                            , Toast.LENGTH_LONG)
+                            .show();
+                    launchLoginCredentials();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to Create User Account "
+                            , Toast.LENGTH_LONG)
+                            .show();
+                    launchAddNewMember();
                 }
             } catch (JSONException e) {
                 Toast.makeText(getApplicationContext(), "Something wrong with the data" +
