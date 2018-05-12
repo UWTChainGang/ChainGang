@@ -28,36 +28,43 @@ import static android.support.constraint.Constraints.TAG;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnLoginCredentialsFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link LoginCredentialsFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment to handle login credentials.
  */
 public class LoginCredentialsFragment extends Fragment {
 
+    /**
+     * Constant for database url
+     */
     private static final String MEMBER_AUTHENTICATE_URL = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/users/login/?";
 
+    /**
+     * Member email
+     */
     private EditText mMemberEmail;
+
+    /**
+     * Member password
+     */
     private EditText mMemberPassword;
 
-
+    /**
+     * Listener for login credentials interaction fragment
+     */
     private OnLoginCredentialsFragmentInteractionListener mListener;
 
+    /**
+     * Required empty public constructor
+     */
     public LoginCredentialsFragment() {
-        // Required empty public constructor
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Create a new instance of LoginCreadentialsFragment using the provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
      * @return A new instance of fragment LoginCredentialsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static LoginCredentialsFragment newInstance(String param1, String param2) {
         LoginCredentialsFragment fragment = new LoginCredentialsFragment();
         Bundle args = new Bundle();
@@ -66,6 +73,11 @@ public class LoginCredentialsFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Override super onCreate method
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +86,14 @@ public class LoginCredentialsFragment extends Fragment {
         }
     }
 
+    /**
+     * Create a view with login/password requests and a button to validate
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,6 +103,12 @@ public class LoginCredentialsFragment extends Fragment {
         mMemberPassword = (EditText) view.findViewById(R.id.password_credentials);
         Button loginCredentials = (Button) view.findViewById(R.id.login_btn_credentials);
         loginCredentials.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Create an url to validate
+             *
+             * @param v view
+             */
             @Override
             public void onClick(View v) {
                 //do logic for authentication
@@ -94,13 +120,11 @@ public class LoginCredentialsFragment extends Fragment {
         return view;
     }
 
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.launchLoginCredentials();
-        }
-    }
-
+    /**
+     * Checks if context is OnLoginCredentialsFragmentInteractionListener, if so activate listener
+     *
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -112,12 +136,21 @@ public class LoginCredentialsFragment extends Fragment {
         }
     }
 
+    /**
+     * Call for the super onDetach method
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    /**
+     * Building the string member url
+     *
+     * @param v view
+     * @return string with user name and password
+     */
     private String buildMemberURL(View v) {
 
         StringBuilder sb = new StringBuilder(MEMBER_AUTHENTICATE_URL);
@@ -142,15 +175,9 @@ public class LoginCredentialsFragment extends Fragment {
         }
         return sb.toString();
     }
+
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Interface to handle interaction events
      */
     public interface OnLoginCredentialsFragmentInteractionListener {
 
@@ -158,6 +185,4 @@ public class LoginCredentialsFragment extends Fragment {
         void validateCredentials(String url);
         void launchChains();
     }
-
-
 }

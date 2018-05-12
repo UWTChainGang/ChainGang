@@ -11,28 +11,27 @@ import android.widget.Button;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnLoginFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link LoginFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment to handle a member login
  */
 public class LoginFragment extends Fragment {
 
+    /**
+     * Listener for the login interaction process
+     */
     private OnLoginFragmentInteractionListener mListener;
 
+    /**
+     * Required empty public constructor
+     */
     public LoginFragment() {
-        // Required empty public constructor
     }
 
     /**
-     * Use this factory method to create a new instance of
+     * Factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @return A new instance of fragment LoginFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static LoginFragment newInstance(String param1, String param2) {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
@@ -40,6 +39,11 @@ public class LoginFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Call for the super onCreate method
+     *
+     * @param savedInstanceState current instance state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,14 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    /**
+     * Create the main view of app with login / create a member options
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState current state
+     * @return view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,13 +84,11 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.launchAddNewMember();
-        }
-    }
-
+    /**
+     * Checks if context is OnLoginFragmentInteractionListener, if so activate listener
+     *
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -90,6 +100,9 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    /**
+     * Call for the super onDetach method
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -98,14 +111,8 @@ public class LoginFragment extends Fragment {
 
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * This interface to allow an interaction in this fragment to be communicated
+     * to the Login Activity and other fragments contained in the Activity.
      */
     public interface OnLoginFragmentInteractionListener {
         // TODO: Update argument type and name

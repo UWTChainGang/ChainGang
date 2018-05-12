@@ -18,36 +18,57 @@ import static android.support.constraint.Constraints.TAG;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnAddEditInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MemberAddEditFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment to handle add / edit member
  */
 public class MemberAddEditFragment extends Fragment {
+
+    /**
+     * Ad and edit dragment constant
+     */
     private final static String MEMBER_ADD_EDIT_FRAG = "MemberAddFragment: ";
+
+    /**
+     * Database url
+     */
     private final static String MEMEBER_ADD_URL
-            = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/users/add/?";//user=someguy420@uw.edu&password=kitty&fname=Mike&lname=Hunt"
+            = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/users/add/?";
+
+    /**
+     * First name of a member
+     */
     private EditText mFName;
+
+    /**
+     * Second name of a member
+     */
     private EditText mLName;
+
+    /**
+     * Member email
+     */
     private EditText mEmail;
+
+    /**
+     * Member password
+     */
     private EditText mPassword;
 
-
+    /**
+     * Listener for add /edit interaction
+     */
     private OnAddEditInteractionListener mListener;
 
+    /**
+     * Required empty public constructor
+     */
     public MemberAddEditFragment() {
-        // Required empty public constructor
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Create a new instance of the MemberAddEditFragment using the provided parameters.
      *
      * @return A new instance of fragment MemberAddEditFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MemberAddEditFragment newInstance(String param1, String param2) {
         MemberAddEditFragment fragment = new MemberAddEditFragment();
         Bundle args = new Bundle();
@@ -55,6 +76,11 @@ public class MemberAddEditFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Calls for the super onCreate method
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +89,14 @@ public class MemberAddEditFragment extends Fragment {
         }
     }
 
+    /**
+     * Creating a view for adding a new member
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,6 +108,12 @@ public class MemberAddEditFragment extends Fragment {
         mPassword = (EditText) view.findViewById(R.id.password);
         Button addButton = (Button) view.findViewById(R.id.createAccountButton);
         addButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Build new member url with the user data
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 mListener.addEditMember(buildMemberURL(v));
@@ -83,13 +123,11 @@ public class MemberAddEditFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(String uri) {
-        if (mListener != null) {
-            mListener.addEditMember(uri);
-        }
-    }
-
+    /**
+     * Checks if context is OnAddEditInteractionListener, if so activate listener
+     *
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -101,12 +139,19 @@ public class MemberAddEditFragment extends Fragment {
         }
     }
 
+    // Calls for the super onDetach method
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    /**
+     * Building a member url with entered data
+     *
+     * @param v view
+     * @return url
+     */
     private String buildMemberURL(View v) {
 
         StringBuilder sb = new StringBuilder(MEMEBER_ADD_URL);
@@ -138,18 +183,11 @@ public class MemberAddEditFragment extends Fragment {
         }
         return sb.toString();
     }
+
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Interface to handle interaction events
      */
     public interface OnAddEditInteractionListener {
-
         void addEditMember(String url);
     }
 }

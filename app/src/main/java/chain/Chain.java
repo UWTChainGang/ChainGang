@@ -1,3 +1,4 @@
+
 package chain;
 
 import org.json.JSONArray;
@@ -8,30 +9,100 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class provides functionality of a chain object
+ */
 public class Chain implements Serializable {
-    public static final String _CHAINID = "_id";
-    public static final String CHAINTITLE = "chainTitle";
-    public static final String CHAINDESC = "chainDesc";
-    public static final String WARDENID = "warden";
-    public static final String MEMBERID = "member";
-    public static final String LINKSTRING = "links";
-    //public static final String ISCHAINCOMPLETE = "isChainCompleted";
 
+    /**
+     * Chain ID constant
+     */
+    public static final String _CHAINID = "_id";
+
+    /**
+     * Chain title constant
+     */
+    public static final String CHAINTITLE = "chainTitle";
+
+    /**
+     * Chain description constant
+     */
+    public static final String CHAINDESC = "chainDesc";
+
+    /**
+     * Chain warden ID constant
+     */
+    public static final String WARDENID = "warden";
+
+    /**
+     * Chain member ID constant
+     */
+    public static final String MEMBERID = "member";
+
+    /**
+     * Chain link constant
+     */
+    public static final String LINKSTRING = "links";
+
+    /**
+     * Chain link ID constant
+     */
     private static final String LINK_ID = "link_id";
+
+    /**
+     * Chain link text constant
+     */
     private static final String LINK_TEXT = "link_text";
+
+    /**
+     * Chain link instruction constant
+     */
     private static final String LINK_INST = "link_instructions";
+
+    /**
+     * Constant if a chain completed
+     */
     private static final String IS_COMPLETED = "isCompleted";
 
-
+    /**
+     * Initial chain ID
+     */
     private String mChainID;
+
+    /**
+     * Initial chain Title
+     */
     private String mChainTitle;
+
+    /**
+     * Initial chain description
+     */
     private String mChainDesc;
+
+    /**
+     * Initial warden ID
+     */
     private String mWardenID;
+
+    /**
+     * Initial member ID
+     */
     private String mMemberID;
-    //private boolean mIsChainComplete;
+
+    /**
+     * Chain links
+     */
     private ArrayList<Link> mchainsInLink = new ArrayList<>();
 
-
+    /**
+     * Class constructor
+     *
+     * @param theChainID given chain ID
+     * @param theChainTitle given chain title
+     * @param theChainDescription given chain description
+     * @param theWardenID given warden ID
+     * @param theMemberID given member ID
+     */
     public Chain(String theChainID, String theChainTitle, String theChainDescription, String theWardenID,
                         String theMemberID) {
 
@@ -44,6 +115,13 @@ public class Chain implements Serializable {
 
     }
 
+    /**
+     * Parsing the given JSON chain object and link chains
+     *
+     * @param chainJSON given JSON object
+     * @return chain list
+     * @throws JSONException complain about JSON object
+     */
     public static List<Chain> parseChainJSON(String chainJSON) throws JSONException {
         List<Chain> chainList = new ArrayList<Chain>();
         if (chainJSON != null) {
@@ -79,16 +157,39 @@ public class Chain implements Serializable {
         return chainList;
     }
 
-
+    /**
+     * Creating a link between chains
+     */
     public static class Link {
 
-
+        /**
+         * Initial link ID
+         */
         private String mLinkID;
+
+        /**
+         * Initial link text
+         */
         private String mLinkText;
+
+        /**
+         * Initial link instruction
+         */
         private String mLinkInst;
+
+        /**
+         * Initial flag if it's the last chain
+         */
         private boolean mIsCompleted;
 
-
+        /**
+         * Link class constructor
+         *
+         * @param theLinkID given link id
+         * @param theLinkText given link text
+         * @param theLinkInstructions given link instruction
+         * @param theIsCompleted given flag if it's the last chain
+         */
         public Link(String theLinkID, String theLinkText, String theLinkInstructions, boolean theIsCompleted) {
 
             setmLinkID(theLinkID);
@@ -185,10 +286,21 @@ public class Chain implements Serializable {
         this.mMemberID = mMemberID;
     }
 
+    /**
+     * Add the given link to the link array
+     *
+     * @param theLinkToAdd the given link
+     */
     public void addLink (Link theLinkToAdd) {
         this.mchainsInLink.add(theLinkToAdd);
     }
 
+    /**
+     * Return a link from link array
+     *
+     * @param x link index
+     * @return found link
+     */
     public Link getLink (int x) {
         return this.mchainsInLink.get(x);
     }
