@@ -115,7 +115,6 @@ public class LoginFragment extends Fragment {
      * to the Login Activity and other fragments contained in the Activity.
      */
     public interface OnLoginFragmentInteractionListener {
-        // TODO: Update argument type and name
         void launchAddNewMember();
     }
 }
