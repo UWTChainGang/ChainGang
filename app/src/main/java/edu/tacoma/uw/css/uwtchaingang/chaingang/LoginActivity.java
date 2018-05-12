@@ -20,12 +20,20 @@ import java.net.URL;
 
 import member.Member;
 
+/**
+ * The main activity class, takes care for all activities of app
+ */
 public class LoginActivity extends AppCompatActivity
         implements LoginFragment.OnLoginFragmentInteractionListener,
         MemberAddEditFragment.OnAddEditInteractionListener,
         LoginCredentialsFragment.OnLoginCredentialsFragmentInteractionListener {
 
 
+    /**
+     * Call for the login fragment
+     *
+     * @param savedInstanceState current state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +45,11 @@ public class LoginActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Add/edit a member task
+     *
+     * @param url
+     */
     @Override
     public void addEditMember(String url) {
         AddMemberTask task = new AddMemberTask();
@@ -46,6 +59,9 @@ public class LoginActivity extends AppCompatActivity
         getSupportFragmentManager().popBackStackImmediate();
     }
 
+    /**
+     * Launch the fragment to add/edit a member
+     */
     @Override
     public void launchAddNewMember() {
         getSupportFragmentManager()
@@ -55,6 +71,9 @@ public class LoginActivity extends AppCompatActivity
                 .commit();
     }
 
+    /**
+     * Launch the fragment to check a member credentials
+     */
     @Override
     public void launchLoginCredentials() {
         getSupportFragmentManager()
@@ -64,12 +83,20 @@ public class LoginActivity extends AppCompatActivity
                 .commit();
     }
 
+    /**
+     * Create an intent for the Chain Activity
+     */
     @Override
     public void launchChains() {
         Intent intent = new Intent(this, ChainActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Validate a member credentials
+     *
+     * @param url a member input data
+     */
     @Override
     public void validateCredentials(String url) {
         AuthenticateMemberTask task = new AuthenticateMemberTask();
@@ -77,14 +104,26 @@ public class LoginActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Class to authenticate a member, synchronize with the member database
+     */
     private class AuthenticateMemberTask extends AsyncTask<String, Void, String> {
 
 
+        /**
+         * Call for super method onPreExecute()
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
+        /**
+         * Setup a connection with the URL(Network)
+         *
+         * @param urls the given URL
+         * @return server response
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -103,7 +142,7 @@ public class LoginActivity extends AppCompatActivity
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to add course, Reason: "
+                    response = "Unable to add a member. Reason: "
                             + e.getMessage();
                 } finally {
                     if (urlConnection != null)
@@ -115,9 +154,7 @@ public class LoginActivity extends AppCompatActivity
         }
 
         /**
-         * It checks to see if there was a problem with the URL(Network) which is when an
-         * exception is caught. It tries to call the parse Method and checks to see if it was successful.
-         * If not, it displays the exception.
+         * It checks if credentials are correct
          *
          * @param result
          */
@@ -149,17 +186,25 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
-
-    ////////////////////
-
+    /**
+     * Class to add a member task, synchronize with the chain database
+     */
     private class AddMemberTask extends AsyncTask<String, Void, String> {
 
-
+        /**
+         * Call for super method onPreExecute()
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
+        /**
+         * Setup a connection with the URL(Network)
+         *
+         * @param urls the given URL
+         * @return server response
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -178,7 +223,7 @@ public class LoginActivity extends AppCompatActivity
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to add course, Reason: "
+                    response = "Unable to add task. Reason: "
                             + e.getMessage();
                 } finally {
                     if (urlConnection != null)
@@ -190,9 +235,7 @@ public class LoginActivity extends AppCompatActivity
         }
 
         /**
-         * It checks to see if there was a problem with the URL(Network) which is when an
-         * exception is caught. It tries to call the parse Method and checks to see if it was successful.
-         * If not, it displays the exception.
+         * It checks if a user account wsa created
          *
          * @param result
          */

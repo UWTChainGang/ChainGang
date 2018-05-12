@@ -12,20 +12,38 @@ import edu.tacoma.uw.css.uwtchaingang.chaingang.ChainListFragment.OnChainListFra
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Chain} and makes a call to the
- * specified {@link OnChainListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
+ *
  */
 public class MyChainRecyclerViewAdapter extends RecyclerView.Adapter<MyChainRecyclerViewAdapter.ViewHolder> {
 
+    /**
+     * Chain list
+     */
     private final List<Chain> mValues;
+
+    /**
+     * Listener for chain list interactions
+     */
     private final OnChainListFragmentInteractionListener mListener;
 
+    /**
+     * Class constructor
+     *
+     * @param items chain list
+     * @param listener
+     */
     public MyChainRecyclerViewAdapter(List<Chain> items, OnChainListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
 
+    /**
+     * View holder
+     *
+     * @param parent
+     * @param viewType
+     * @return view holder
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -33,10 +51,17 @@ public class MyChainRecyclerViewAdapter extends RecyclerView.Adapter<MyChainRecy
         return new ViewHolder(view);
     }
 
+    /**
+     * Bind View holder
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getmChainID());
+        //holder.mIdView.setText(mValues.get(position).getmChainID());
+        holder.mIdView.setText(mValues.get(position).getmChainTitle());
         holder.mContentView.setText(mValues.get(position).getmChainDesc());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -56,12 +81,36 @@ public class MyChainRecyclerViewAdapter extends RecyclerView.Adapter<MyChainRecy
         return mValues.size();
     }
 
+    /**
+     * View holder class
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
+
+        /**
+         * View
+         */
         public final View mView;
+
+        /**
+         * View ID
+         */
         public final TextView mIdView;
+
+        /**
+         * View content
+         */
         public final TextView mContentView;
+
+        /**
+         * Chain
+         */
         public Chain mItem;
 
+        /**
+         * CiewHolder class constructor
+         *
+         * @param view
+         */
         public ViewHolder(View view) {
             super(view);
             mView = view;
@@ -69,6 +118,11 @@ public class MyChainRecyclerViewAdapter extends RecyclerView.Adapter<MyChainRecy
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
+        /**
+         * Overriden toSting method
+         *
+         * @return
+         */
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";

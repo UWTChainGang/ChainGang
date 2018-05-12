@@ -25,20 +25,44 @@ import java.util.List;
 import chain.Chain;
 
 /**
+ * Fragment to handle chain list processes
  */
 public class ChainListFragment extends Fragment {
 
+    /**
+     * Constant for column counter
+     */
     private static final String ARG_COLUMN_COUNT = "column-count";
+
+    /**
+     * Link to the chain table in the database
+     */
     private static final String chainURL = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/chains";
+
+    /**
+     * Column counter initializer
+     */
     private int mColumnCount = 1;
+
+    /**
+     * Listener for chain list interactions
+     */
     private OnChainListFragmentInteractionListener mListener;
     private List<Chain> mChainList;
     private RecyclerView mRecyclerView;
 
+    /**
+     * Required empty constructor
+     */
     public ChainListFragment() {
-
     }
 
+    /**
+     * Method to create an instance of the ChainListFragment
+     *
+     * @param columnCount  column counter
+     * @return instance of ChainListFragment
+     */
     public static ChainListFragment newInstance(int columnCount) {
         ChainListFragment fragment = new ChainListFragment();
         Bundle args = new Bundle();
@@ -47,7 +71,11 @@ public class ChainListFragment extends Fragment {
         return fragment;
     }
 
-
+    /**
+     * Calls super onCreate method
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +85,14 @@ public class ChainListFragment extends Fragment {
         }
     }
 
+    /**
+     * Create a view for the chain list
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,6 +114,11 @@ public class ChainListFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Checks if context is OnChainListFragmentInteractionListener, if so activate listener
+     *
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -89,6 +130,9 @@ public class ChainListFragment extends Fragment {
         }
     }
 
+    /**
+     * Calls for the super onDetach method
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -96,20 +140,17 @@ public class ChainListFragment extends Fragment {
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * This interface to allow an interaction in this fragment to be communicated
+     * to the Chain Activity and other fragments contained in the Activity.
      */
     public interface OnChainListFragmentInteractionListener {
 
         void onChainListFragmentInteraction(Chain chain);
     }
 
+    /**
+     * Class to get a list of chains, synchronized with the member database
+     */
     private class ChainAsyncTask extends AsyncTask<String, Void, String> {
 
         @Override
@@ -146,6 +187,11 @@ public class ChainListFragment extends Fragment {
             return response;
         }
 
+        /**
+         * It checks the list of chains
+         *
+         * @param result
+         */
         @Override
         protected void onPostExecute(String result) {
             Log.i("", "onPostExecute");
@@ -163,7 +209,7 @@ public class ChainListFragment extends Fragment {
                         .show();
                 return;
             }
-            // Everything is good, show the list of courses.
+            // Everything is good, show the list of chains.
             if (!mChainList.isEmpty()) {
                 mRecyclerView.setAdapter(new MyChainRecyclerViewAdapter(mChainList, mListener));
             }

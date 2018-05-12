@@ -9,10 +9,17 @@ import android.view.View;
 
 import chain.Chain;
 
-
+/**
+ * Activity to process a member tasks
+ */
 public class ChainActivity extends AppCompatActivity
         implements ChainListFragment.OnChainListFragmentInteractionListener {
 
+    /**
+     * Initialize the ChainList Fragment
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +40,12 @@ public class ChainActivity extends AppCompatActivity
         });
     }
 
-
+    /**
+     * Implementation of OnChainListFragmentInteractionListener interface
+     *
+     * @param chain
+     */
     @Override
     public void onChainListFragmentInteraction(Chain chain) {
-
     }
 }
