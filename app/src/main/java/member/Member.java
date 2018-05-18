@@ -59,7 +59,7 @@ public class Member {
      * @return member status
      * @throws JSONException complain about JSON object
      */
-    public static String parseMemberJSON(String memberJSON) throws JSONException {
+    public static Member parseMemberJSON(String memberJSON) throws JSONException {
         String memberStatus = Member.USER_DOES_NOT_EXIST;
         Log.i("Member","in Parse JSON");
         if (memberJSON != null) {
@@ -69,7 +69,8 @@ public class Member {
                 memberStatus = obj.getString(Member.STATUS);
             }
         }
-        return memberStatus;
+        Member member = new Member(memberStatus);
+        return member;
     }
 
     /**
@@ -79,16 +80,18 @@ public class Member {
      * @return member status
      * @throws JSONException complain about JSON object
      */
-    public static String parseMemberAddJSON(String memberJSON) throws JSONException {
+    public static Member parseMemberAddJSON(String memberJSON) throws JSONException {
         String memberStatus = Member.USER_DOES_NOT_EXIST;
-
+        Log.i("Member","in ParseMemberAddJSON");
+        Log.i("Member",memberJSON);
         if (memberJSON != null) {
             JSONArray arr = new JSONArray(memberJSON);
 
             JSONObject obj = arr.getJSONObject(0);
             memberStatus = obj.getString("status");
         }
-        return memberStatus;
+        Member member = new Member(memberStatus);
+        return member;
     }
 
     /**

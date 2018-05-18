@@ -23,7 +23,7 @@ import static android.support.constraint.Constraints.TAG;
 public class MemberAddEditFragment extends Fragment {
 
     /**
-     * Ad and edit dragment constant
+     * Ad and edit fragment constant
      */
     private final static String MEMBER_ADD_EDIT_FRAG = "MemberAddFragment: ";
 
@@ -170,7 +170,7 @@ public class MemberAddEditFragment extends Fragment {
             String fname = mFName.getText().toString();
             sb.append("&fname=");
             sb.append(URLEncoder.encode(fname, "UTF-8"));
-            Log.i(TAG, sb.toString());
+            //Log.i(TAG, sb.toString());
 
             String lname = mLName.getText().toString();
             sb.append("&lname=");
