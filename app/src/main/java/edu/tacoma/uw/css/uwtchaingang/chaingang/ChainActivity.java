@@ -8,12 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import chain.Chain;
+import link.Link;
 
 /**
  * Activity to process a member tasks
  */
 public class ChainActivity extends AppCompatActivity
-        implements ChainListFragment.OnChainListFragmentInteractionListener {
+        implements ChainListFragment.OnChainListFragmentInteractionListener,
+        LinkListFragment.OnLinkListFragmentInteractionListener {
 
     /**
      * Initialize the ChainList Fragment
@@ -34,7 +36,7 @@ public class ChainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "this will send email to warden", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -43,9 +45,36 @@ public class ChainActivity extends AppCompatActivity
     /**
      * Implementation of OnChainListFragmentInteractionListener interface
      *
-     * @param chain
+     * @param chain for reference of its links.
      */
     @Override
     public void onChainListFragmentInteraction(Chain chain) {
+        LinkListFragment linkListFragment = new LinkListFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ChainListFragment.CHAIN_SELECTED, chain);
+        linkListFragment.setArguments(args);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.chain_container, linkListFragment)
+                .addToBackStack(null)
+                .commit();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "this will send email to warden", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    /**
+     * Implementation of OnLinkListFragmentInteractionListener interface
+     *
+     * @param link for reference of its links.
+     */
+    @Override
+    public void onLinkSelected(Link link) {
+
     }
 }

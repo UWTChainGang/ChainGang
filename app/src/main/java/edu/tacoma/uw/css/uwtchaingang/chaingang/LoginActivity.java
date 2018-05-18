@@ -59,16 +59,12 @@ public class LoginActivity extends AppCompatActivity
     /**
      * Add/edit a member task
      *
-     * @param url
+     * @param url for POST to server
      */
     @Override
     public void addEditMember(String url) {
         AuthenticateMemberTask task = new AuthenticateMemberTask();
         task.execute(new String[]{url.toString()});
-        Log.i(LOGIN_ACTIVITY, "addEditMember..................");
-        // Takes you back to the previous fragment by popping the current fragment out.
-        //getSupportFragmentManager().popBackStackImmediate();
-
 
     }
 

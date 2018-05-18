@@ -78,26 +78,6 @@ public class Member {
         return member;
     }
 
-    /**
-     * Parsing status to a JSON object
-     *
-     * @param memberJSON json object
-     * @return member status
-     * @throws JSONException complain about JSON object
-     */
-    public static Member parseMemberAddJSON(String memberJSON) throws JSONException {
-        String memberStatus = Member.USER_DOES_NOT_EXIST;
-        Log.i("Member","in ParseMemberAddJSON");
-        Log.i("Member",memberJSON);
-        if (memberJSON != null) {
-            JSONArray arr = new JSONArray(memberJSON);
-
-            JSONObject obj = arr.getJSONObject(0);
-            memberStatus = obj.getString("status");
-        }
-        Member member = new Member(memberStatus);
-        return member;
-    }
 
     /**
      * Getter for the initial status
