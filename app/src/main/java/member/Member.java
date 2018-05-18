@@ -33,6 +33,11 @@ public class Member {
     public static final String USER_DOES_NOT_EXIST = "USER_DOES_NOT_EXIST";
 
     /**
+     * Constant of negative response if a member already exists
+     */
+    public static final String USER_ALREADY_EXISTS = "USER_ALREADY_EXISTS";
+
+    /**
      * Response constant if a member was identified
      */
     public static final String SUCCESS = "SUCCESS";

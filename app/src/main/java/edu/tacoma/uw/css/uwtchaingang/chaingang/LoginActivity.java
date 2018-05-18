@@ -176,25 +176,30 @@ public class LoginActivity extends AppCompatActivity
             try {
                 mMember = Member.parseMemberJSON(result);
                 if (mMember.getmStatus().equals(Member.USER_AUTHENTICATED)) {
-                    Toast.makeText(getApplicationContext(), "Login Success"
+                    Toast.makeText(getApplicationContext(), Member.USER_AUTHENTICATED
                             , Toast.LENGTH_LONG)
                             .show();
                     launchChains();
                 } else if (mMember.getmStatus().equals(Member.USER_DOES_NOT_EXIST)){
-                    Toast.makeText(getApplicationContext(), "User not registered "
+                    Toast.makeText(getApplicationContext(), "Member Does Not Exist "
                             , Toast.LENGTH_LONG)
                             .show();
                     launchLoginCredentials();
                 } else if (mMember.getmStatus().equals(Member.SUCCESS)) {
-                    Toast.makeText(getApplicationContext(), "Operation Successful "
+                    Toast.makeText(getApplicationContext(), "Account Created "
                             , Toast.LENGTH_LONG)
                             .show();
                     launchLoginCredentials();
+                } else if (mMember.getmStatus().equals((Member.USER_ALREADY_EXISTS))) {
+                    Toast.makeText(getApplicationContext(), "Email already in use "
+                            , Toast.LENGTH_LONG)
+                            .show();
+                    launchAddNewMember();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Incorrect credential, Try again. "
+                    Toast.makeText(getApplicationContext(), "Something went wrong "
                             , Toast.LENGTH_LONG)
                             .show();
-                    launchLoginCredentials();
+                    getSupportFragmentManager().popBackStackImmediate();
 
                 }
             } catch (JSONException e) {
