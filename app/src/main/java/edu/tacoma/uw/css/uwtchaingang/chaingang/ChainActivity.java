@@ -1,5 +1,6 @@
 package edu.tacoma.uw.css.uwtchaingang.chaingang;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,8 @@ import link.Link;
 public class ChainActivity extends AppCompatActivity
         implements ChainListFragment.OnChainListFragmentInteractionListener,
         LinkListFragment.OnLinkListFragmentInteractionListener {
+
+    public static final String EXTRA_LINK = "extra_link";
 
     /**
      * Initialize the ChainList Fragment
@@ -75,6 +78,9 @@ public class ChainActivity extends AppCompatActivity
      */
     @Override
     public void onLinkSelected(Link link) {
+        Intent intent = new Intent(this, LinkActivity.class);
+        intent.putExtra(EXTRA_LINK, link);
+        startActivity(intent);
 
     }
 }
