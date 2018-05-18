@@ -33,6 +33,11 @@ public class Member {
     public static final String USER_DOES_NOT_EXIST = "USER_DOES_NOT_EXIST";
 
     /**
+     * Constant of negative response if a member already exists
+     */
+    public static final String USER_ALREADY_EXISTS = "USER_ALREADY_EXISTS";
+
+    /**
      * Response constant if a member was identified
      */
     public static final String SUCCESS = "SUCCESS";
@@ -59,7 +64,7 @@ public class Member {
      * @return member status
      * @throws JSONException complain about JSON object
      */
-    public static String parseMemberJSON(String memberJSON) throws JSONException {
+    public static Member parseMemberJSON(String memberJSON) throws JSONException {
         String memberStatus = Member.USER_DOES_NOT_EXIST;
         Log.i("Member","in Parse JSON");
         if (memberJSON != null) {
@@ -69,27 +74,10 @@ public class Member {
                 memberStatus = obj.getString(Member.STATUS);
             }
         }
-        return memberStatus;
+        Member member = new Member(memberStatus);
+        return member;
     }
 
-    /**
-     * Parsing status to a JSON object
-     *
-     * @param memberJSON json object
-     * @return member status
-     * @throws JSONException complain about JSON object
-     */
-    public static String parseMemberAddJSON(String memberJSON) throws JSONException {
-        String memberStatus = Member.USER_DOES_NOT_EXIST;
-
-        if (memberJSON != null) {
-            JSONArray arr = new JSONArray(memberJSON);
-
-            JSONObject obj = arr.getJSONObject(0);
-            memberStatus = obj.getString("status");
-        }
-        return memberStatus;
-    }
 
     /**
      * Getter for the initial status

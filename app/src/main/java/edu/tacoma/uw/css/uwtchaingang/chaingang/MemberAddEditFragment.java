@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.net.URLEncoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -23,7 +25,7 @@ import static android.support.constraint.Constraints.TAG;
 public class MemberAddEditFragment extends Fragment {
 
     /**
-     * Ad and edit dragment constant
+     * Ad and edit fragment constant
      */
     private final static String MEMBER_ADD_EDIT_FRAG = "MemberAddFragment: ";
 
@@ -52,6 +54,11 @@ public class MemberAddEditFragment extends Fragment {
      * Member password
      */
     private EditText mPassword;
+
+    /**
+     * Member password
+     */
+    private EditText mPasswordConfirm;
 
     /**
      * Listener for add /edit interaction
@@ -106,6 +113,7 @@ public class MemberAddEditFragment extends Fragment {
         mLName = (EditText) view.findViewById(R.id.lastname);
         mEmail = (EditText) view.findViewById(R.id.email);
         mPassword = (EditText) view.findViewById(R.id.password);
+        mPasswordConfirm = (EditText) view.findViewById(R.id.confirmpassword);
         Button addButton = (Button) view.findViewById(R.id.createAccountButton);
         addButton.setOnClickListener(new View.OnClickListener() {
 
@@ -116,7 +124,9 @@ public class MemberAddEditFragment extends Fragment {
              */
             @Override
             public void onClick(View v) {
-                mListener.addEditMember(buildMemberURL(v));
+                if (isValidMemberInput(v)) {
+                    mListener.addEditMember(buildMemberURL(v));
+                }
             }
         });
 
@@ -155,9 +165,7 @@ public class MemberAddEditFragment extends Fragment {
     private String buildMemberURL(View v) {
 
         StringBuilder sb = new StringBuilder(MEMEBER_ADD_URL);
-
         try {
-
             String email = mEmail.getText().toString();
             sb.append("user=");
             sb.append(URLEncoder.encode(email, "UTF-8"));
@@ -170,7 +178,7 @@ public class MemberAddEditFragment extends Fragment {
             String fname = mFName.getText().toString();
             sb.append("&fname=");
             sb.append(URLEncoder.encode(fname, "UTF-8"));
-            Log.i(TAG, sb.toString());
+            //Log.i(TAG, sb.toString());
 
             String lname = mLName.getText().toString();
             sb.append("&lname=");
@@ -182,6 +190,50 @@ public class MemberAddEditFragment extends Fragment {
                     .show();
         }
         return sb.toString();
+    }
+
+    /**
+     * Validation for member input to the EditText fields.
+     *
+     * @param view access to the current view
+     * @return whether the member input is valid.
+     */
+    private boolean isValidMemberInput(View view) {
+        String email = mEmail.getText().toString();
+        Pattern pattern;
+        // Regex for a valid email address
+        String emailRegEx = "^[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,4}$";
+        // Compare the regex with the email address
+        pattern = Pattern.compile(emailRegEx);
+        Matcher matcher = pattern.matcher(email);
+        if (!matcher.find()) {
+            Toast.makeText(view.getContext(), "Invalid Email" , Toast.LENGTH_LONG)
+                    .show();
+            return false;
+        }
+        String password = mPassword.getText().toString();
+        String passwordConfirm = mPasswordConfirm.getText().toString();
+        String passwordRegEx = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        pattern = Pattern.compile(passwordRegEx);
+        matcher = pattern.matcher(password);
+        if (!password.equals(passwordConfirm)) {
+            Toast.makeText(view.getContext(), "Passwords do not match " , Toast.LENGTH_LONG)
+                    .show();
+            return false;
+        }
+        if(!matcher.find()) {
+            Toast.makeText(view.getContext(), "Password example: @#23WEwe " , Toast.LENGTH_LONG)
+                    .show();
+            return false;
+        }
+        String fname = mFName.getText().toString();
+        String lname = mLName.getText().toString();
+        if (fname.length() < 2 || lname.length() < 2) {
+            Toast.makeText(view.getContext(), "Please enter a name of 2 or more characters " , Toast.LENGTH_LONG)
+                    .show();
+            return false;
+        }
+        return true;
     }
 
     /**

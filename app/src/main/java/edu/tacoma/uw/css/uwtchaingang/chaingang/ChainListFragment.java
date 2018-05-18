@@ -29,6 +29,7 @@ import chain.Chain;
  */
 public class ChainListFragment extends Fragment {
 
+    public final static String CHAIN_SELECTED = "chain_selected";
     /**
      * Constant for column counter
      */
@@ -55,6 +56,7 @@ public class ChainListFragment extends Fragment {
      * Required empty constructor
      */
     public ChainListFragment() {
+
     }
 
     /**

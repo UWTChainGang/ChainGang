@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -28,6 +29,16 @@ public class LoginActivity extends AppCompatActivity
         MemberAddEditFragment.OnAddEditInteractionListener,
         LoginCredentialsFragment.OnLoginCredentialsFragmentInteractionListener {
 
+    /**
+     * Constant of positive response if a member exists
+     */
+    public static final String USER_AUTHENTICATED = "USER_AUTHENTICATED";
+    private Member mMember;
+
+    /**
+     * The activity name for Logging.
+     */
+    private final static String LOGIN_ACTIVITY = "LoginActivity: ";
 
     /**
      * Call for the login fragment
@@ -48,15 +59,13 @@ public class LoginActivity extends AppCompatActivity
     /**
      * Add/edit a member task
      *
-     * @param url
+     * @param url for POST to server
      */
     @Override
     public void addEditMember(String url) {
-        AddMemberTask task = new AddMemberTask();
+        AuthenticateMemberTask task = new AuthenticateMemberTask();
         task.execute(new String[]{url.toString()});
 
-        // Takes you back to the previous fragment by popping the current fragment out.
-        getSupportFragmentManager().popBackStackImmediate();
     }
 
     /**
@@ -142,7 +151,7 @@ public class LoginActivity extends AppCompatActivity
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to add a member. Reason: "
+                    response = "Unable to authenticate Member. Reason: "
                             + e.getMessage();
                 } finally {
                     if (urlConnection != null)
@@ -161,103 +170,41 @@ public class LoginActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result) {
             try {
-                String status = Member.parseMemberJSON(result);
-                if (status.equals(Member.USER_AUTHENTICATED)) {
-                    Toast.makeText(getApplicationContext(), "Login Success"
+                mMember = Member.parseMemberJSON(result);
+                if (mMember.getmStatus().equals(Member.USER_AUTHENTICATED)) {
+                    Toast.makeText(getApplicationContext(), Member.USER_AUTHENTICATED
                             , Toast.LENGTH_LONG)
                             .show();
                     launchChains();
-                } else if (status.equals(Member.USER_DOES_NOT_EXIST)){
-                    Toast.makeText(getApplicationContext(), "User not registered "
+                } else if (mMember.getmStatus().equals(Member.USER_DOES_NOT_EXIST)){
+                    Toast.makeText(getApplicationContext(), "Member Does Not Exist "
                             , Toast.LENGTH_LONG)
                             .show();
                     launchLoginCredentials();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Incorrect credential, Try again. "
+                } else if (mMember.getmStatus().equals(Member.SUCCESS)) {
+                    Toast.makeText(getApplicationContext(), "Account Created "
                             , Toast.LENGTH_LONG)
                             .show();
                     launchLoginCredentials();
-
-                }
-            } catch (JSONException e) {
-                Toast.makeText(getApplicationContext(), "Something wrong with the data" +
-                        e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    /**
-     * Class to add a member task, synchronize with the chain database
-     */
-    private class AddMemberTask extends AsyncTask<String, Void, String> {
-
-        /**
-         * Call for super method onPreExecute()
-         */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        /**
-         * Setup a connection with the URL(Network)
-         *
-         * @param urls the given URL
-         * @return server response
-         */
-        @Override
-        protected String doInBackground(String... urls) {
-            String response = "";
-            HttpURLConnection urlConnection = null;
-            for (String url : urls) {
-                try {
-                    URL urlObject = new URL(url);
-                    urlConnection = (HttpURLConnection) urlObject.openConnection();
-
-                    InputStream content = urlConnection.getInputStream();
-
-                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                    String s = "";
-                    while ((s = buffer.readLine()) != null) {
-                        response += s;
-                    }
-
-                } catch (Exception e) {
-                    response = "Unable to add task. Reason: "
-                            + e.getMessage();
-                } finally {
-                    if (urlConnection != null)
-                        urlConnection.disconnect();
-                }
-
-            }
-            return response;
-        }
-
-        /**
-         * It checks if a user account wsa created
-         *
-         * @param result
-         */
-        @Override
-        protected void onPostExecute(String result) {
-            try {
-                String status = Member.parseMemberAddJSON(result);
-                if (status.equals(Member.SUCCESS)) {
-                    Toast.makeText(getApplicationContext(), "Operation Successful "
-                            , Toast.LENGTH_LONG)
-                            .show();
-                    launchLoginCredentials();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Failed to Create User Account "
+                } else if (mMember.getmStatus().equals((Member.USER_ALREADY_EXISTS))) {
+                    Toast.makeText(getApplicationContext(), "Email already in use "
                             , Toast.LENGTH_LONG)
                             .show();
                     launchAddNewMember();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Something went wrong "
+                            , Toast.LENGTH_LONG)
+                            .show();
+                    getSupportFragmentManager().popBackStackImmediate();
+
                 }
             } catch (JSONException e) {
                 Toast.makeText(getApplicationContext(), "Something wrong with the data" +
                         e.getMessage(), Toast.LENGTH_LONG).show();
+
             }
         }
     }
+
+
 }

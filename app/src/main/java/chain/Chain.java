@@ -9,6 +9,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import link.Link;
+
+
 /**
  * Class provides functionality of a chain object
  */
@@ -89,6 +92,8 @@ public class Chain implements Serializable {
      */
     private String mMemberID;
 
+
+
     /**
      * Chain links
      */
@@ -157,94 +162,10 @@ public class Chain implements Serializable {
         return chainList;
     }
 
-    /**
-     * Creating a link between chains
-     */
-    public static class Link {
 
-        /**
-         * Initial link ID
-         */
-        private String mLinkID;
-
-        /**
-         * Initial link text
-         */
-        private String mLinkText;
-
-        /**
-         * Initial link instruction
-         */
-        private String mLinkInst;
-
-        /**
-         * Initial flag if it's the last chain
-         */
-        private boolean mIsCompleted;
-
-        /**
-         * Link class constructor
-         *
-         * @param theLinkID given link id
-         * @param theLinkText given link text
-         * @param theLinkInstructions given link instruction
-         * @param theIsCompleted given flag if it's the last chain
-         */
-        public Link(String theLinkID, String theLinkText, String theLinkInstructions, boolean theIsCompleted) {
-
-            setmLinkID(theLinkID);
-            setmLinkText(theLinkText);
-            setmLinkInst(theLinkInstructions);
-            mIsCompleted = theIsCompleted;
-
-
-        }
-
-        public String getLinkId() {
-            return getLINK_ID();
-        }
-
-        public String getLINK_ID() {
-            return LINK_ID;
-        }
-
-        public String getLINK_TEXT() {
-            return LINK_TEXT;
-        }
-
-        public String getLINK_INST() {
-            return LINK_INST;
-        }
-
-        public String getIS_COMPLETED() {
-            return IS_COMPLETED;
-        }
-
-        public String getmLinkID() {
-            return mLinkID;
-        }
-
-        public void setmLinkID(String mLinkID) {
-            this.mLinkID = mLinkID;
-        }
-
-        public String getmLinkText() {
-            return mLinkText;
-        }
-
-        public void setmLinkText(String mLinkText) {
-            this.mLinkText = mLinkText;
-        }
-
-        public String getmLinkInst() {
-            return mLinkInst;
-        }
-
-        public void setmLinkInst(String mLinkInst) {
-            this.mLinkInst = mLinkInst;
-        }
+    public ArrayList<Link> getMchainsInLink() {
+        return mchainsInLink;
     }
-
 
     public String getmChainID() {
         return mChainID;
