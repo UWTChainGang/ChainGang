@@ -1,6 +1,8 @@
 package edu.tacoma.uw.css.uwtchaingang.chaingang;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +42,13 @@ public class LoginActivity extends AppCompatActivity
      */
     private final static String LOGIN_ACTIVITY = "LoginActivity: ";
 
+    // ************************************************************************
+    /**
+     * Variable to handle local storing of a member credentials
+     */
+    private SharedPreferences mSharedPreferences;
+    // ************************************************************************
+
     /**
      * Call for the login fragment
      *
@@ -49,11 +58,34 @@ public class LoginActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // ************************************************************************
+        // ORIGINAL
+        /*
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.login_fragment_container,new LoginFragment())
                 .commit();
+        */
+        // ************************************************************************
 
+        // ************************************************************************
+        // REPLACED to
+
+        mSharedPreferences =
+                getSharedPreferences(getString(R.string.LOGIN_PREFS)
+                        , Context.MODE_PRIVATE);
+        if (!mSharedPreferences.getBoolean(getString(R.string.LOGGEDIN)
+                , false)) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.login_fragment_container,new LoginFragment())
+                    .commit();
+        } else {
+            launchChains();
+        }
+
+        // ************************************************************************
     }
 
     /**
@@ -175,6 +207,16 @@ public class LoginActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), Member.USER_AUTHENTICATED
                             , Toast.LENGTH_LONG)
                             .show();
+
+                    // ************************************************************************
+                    // store info in the file that a member credentials were validated
+                    mSharedPreferences
+                            .edit()
+                            .putBoolean(getString(R.string.LOGGEDIN), true)
+                            .commit();
+                    // ************************************************************************
+
+
                     launchChains();
                 } else if (mMember.getmStatus().equals(Member.USER_DOES_NOT_EXIST)){
                     Toast.makeText(getApplicationContext(), "Member Does Not Exist "
