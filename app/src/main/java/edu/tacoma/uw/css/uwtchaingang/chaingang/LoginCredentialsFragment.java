@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,8 +100,10 @@ public class LoginCredentialsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login_credentials, container, false);
+
         mMemberEmail = (EditText) view.findViewById(R.id.email_credentials);
         mMemberPassword = (EditText) view.findViewById(R.id.password_credentials);
+
         Button loginCredentials = (Button) view.findViewById(R.id.login_btn_credentials);
         loginCredentials.setOnClickListener(new View.OnClickListener() {
 
@@ -111,11 +114,49 @@ public class LoginCredentialsFragment extends Fragment {
              */
             @Override
             public void onClick(View v) {
-                //do logic for authentication
+
+                // ************************************************************************
+                // Input validation added
+                String email = mMemberEmail.getText().toString();
+                String password = mMemberPassword.getText().toString();
+
+                if (TextUtils.isEmpty(email) || !email.contains("@")) {
+                    Toast.makeText(v.getContext(), "Enter valid email address"
+                            ,Toast.LENGTH_SHORT)
+                            .show();
+                    mMemberEmail.requestFocus();
+                } else if (TextUtils.isEmpty(password) || password.length() < 6) {
+                    Toast.makeText(v.getContext(), "Enter valid password (at least 6 characters)"
+                            ,Toast.LENGTH_SHORT)
+                            .show();
+                    mMemberPassword.requestFocus();
+                } else {
+                    mListener.validateCredentials(buildMemberURL(v));
+                }
+
+                // ************************************************************************
+
+
+                /*
                 mListener.validateCredentials(buildMemberURL(v));
 
+                replaced by
+
+                } else {
+                    mListener.validateCredentials(buildMemberURL(v));
+                }
+
+                from above
+
+                */
             }
         });
+
+
+        // ************************************************************************
+        // fragment title changed to "Login"
+        getActivity().setTitle("Login");
+        // ************************************************************************
 
         return view;
     }
