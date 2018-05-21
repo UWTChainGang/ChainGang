@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="CREATE_CHAIN_SQL">CREATE TABLE IF NOT EXISTS Chain (_id TEXT PRIMARY KEY, chainTitle TEXT, chainDesc TEXT, warden TEXT, member TEXT)</string>
+    <string name="DROP_CHAIN_SQL">DROP TABLE IF EXISTS Chain</string>
+
+</resources>
+
+
+    <!--
+      ,
+             isChainCompleted INTEGER,
+             dtg_Created TEXT,
+             dtg_LastUpdated TEXT,
+             linkArray TXT
+
+      -->
