@@ -21,12 +21,16 @@
     <string name="txt_search">Confirm Password</string>
     <string name="txt_sample_chain">Sample Chain</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_chain">ChainActivity</string>
     <string name="title_activity_link">LinkActivity</string>
 
-
+    <string name="no_external_res">No External Resources for this Link.</string>
+    <string name="external_res_title">External Resource(s):</string>
+    <string name="complete_link">COMPLETE LINK</string>
+    <string name="link_notes">Notes for this link:</string>
+    <string name="tasks">Link Task(s):</string>
     <!--  *************************************************** -->
     <string name="LOGIN_PREFS">edu.tacoma.uw.css.uwtchaingang.chaingang.PREFS</string>
     <string name="LOGGEDIN">loggedin</string>

@@ -24,9 +24,8 @@ public class LinkListFragment extends Fragment {
     public final static String CHAIN_SELECTED = "chain_selected";
     public final static String LINK_SELECTED = "link_selected";
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+
     private int mColumnCount = 1;
     private OnLinkListFragmentInteractionListener mListener;
     //private List<Link> mLinkList;
