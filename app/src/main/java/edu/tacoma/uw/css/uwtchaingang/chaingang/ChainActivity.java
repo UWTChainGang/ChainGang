@@ -39,14 +39,7 @@ public class ChainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.chain_container, chainListFragment)
                 .commit();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "this will send email to warden", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
     }
 
     /**
@@ -65,14 +58,6 @@ public class ChainActivity extends AppCompatActivity
                 .addToBackStack(null)
                 .commit();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "this will send email to warden", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     /**

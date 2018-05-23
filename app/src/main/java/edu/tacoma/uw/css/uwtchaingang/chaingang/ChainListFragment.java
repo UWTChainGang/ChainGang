@@ -185,7 +185,7 @@ public class ChainListFragment extends Fragment {
         } else {
 
             Toast.makeText(view.getContext(),
-                    "No network connection available, Displaying locally stored data",
+                    "Displaying locally stored data",
                     Toast.LENGTH_LONG).show();
 
 //            LayoutInflater myInflater = LayoutInflater.from(this);
@@ -282,8 +282,7 @@ public class ChainListFragment extends Fragment {
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to download the list of Chains, Reason: "
-                            + e.getMessage();
+                    response = "No Network";
                 }
                 finally {
                     if (urlConnection != null)
@@ -303,7 +302,7 @@ public class ChainListFragment extends Fragment {
         protected void onPostExecute(String result) {
             Log.i("", "onPostExecute");
 
-            if (result.startsWith("Unable to")) {
+            if (result.startsWith("No Network")) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
                         .show();
                 return;
