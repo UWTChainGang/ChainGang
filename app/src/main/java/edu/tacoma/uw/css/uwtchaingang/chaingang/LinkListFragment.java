@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import chain.Chain;
 import link.Link;
 
@@ -30,7 +33,10 @@ public class LinkListFragment extends Fragment {
     private OnLinkListFragmentInteractionListener mListener;
     //private List<Link> mLinkList;
     private RecyclerView mRecylcerView;
+
+
     private Chain mChain;
+    private Set<String> mCompletedIds;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -51,8 +57,8 @@ public class LinkListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
+            mCompletedIds = new HashSet<String>();
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             mChain = (Chain) getArguments().get(CHAIN_SELECTED);
 
@@ -95,6 +101,8 @@ public class LinkListFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

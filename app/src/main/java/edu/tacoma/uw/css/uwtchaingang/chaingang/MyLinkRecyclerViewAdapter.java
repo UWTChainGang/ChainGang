@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import chain.Chain;
 import edu.tacoma.uw.css.uwtchaingang.chaingang.LinkListFragment.OnLinkListFragmentInteractionListener;
 import link.Link;
 
@@ -36,7 +37,6 @@ public class MyLinkRecyclerViewAdapter extends RecyclerView.Adapter<MyLinkRecycl
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).getmLinkText());
-        //holder.mContentView.setText(mValues.get(position).getIS_COMPLETED());
         holder.mContentView.setText(Boolean.toString(mValues.get(position).ismIsCompleted()));
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

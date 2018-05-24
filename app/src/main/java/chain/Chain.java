@@ -155,7 +155,7 @@ public class Chain implements Serializable {
 
                     }
 
-
+                    chaincontent.getLink(0).setmIsCompleted(true);
                 }
 
                 chainList.add(chaincontent);
@@ -229,6 +229,8 @@ public class Chain implements Serializable {
     public Link getLink (int x) {
         return this.mchainsInLink.get(x);
     }
+
+
 
 }
 

@@ -48,12 +48,15 @@ public class LinkActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Button completeButton = findViewById(R.id.completeButton);
-        completeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // connect with db
-            }
-        });
+        if (mLink.ismIsCompleted()) {
+            completeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // connect with db
+                    finish();
+                }
+            });
+        }
     }
 
 }
