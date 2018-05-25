@@ -16,16 +16,11 @@
         android:text="@string/tasks" />
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/taskCheckerA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Link task 1" />
 
-    <CheckBox
-        android:id="@+id/checkBox3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="link task 2 if needed" />
 
     <View
         android:id="@+id/divider"
@@ -40,10 +35,12 @@
         android:text="@string/external_res_title" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/externalResA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="url here" />
+        android:text="url here"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp" />
 
     <View
         android:id="@+id/divider2"
@@ -52,7 +49,7 @@
         android:background="?android:attr/listDivider" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editLinkNotes"
         android:layout_width="match_parent"
         android:layout_height="57dp"
         android:ems="10"
@@ -69,7 +66,7 @@
         android:background="?android:attr/listDivider" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/completeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

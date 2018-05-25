@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ public class ChainActivity extends AppCompatActivity
         implements ChainListFragment.OnChainListFragmentInteractionListener,
         LinkListFragment.OnLinkListFragmentInteractionListener {
 
+    public static final String CHAIN_ACTIVITY = "CHAIN_ACTIVITY";
     public static final String EXTRA_LINK = "extra_link";
 
     /**
@@ -69,6 +71,7 @@ public class ChainActivity extends AppCompatActivity
     public void onLinkSelected(Link link) {
         Intent intent = new Intent(this, LinkActivity.class);
         intent.putExtra(EXTRA_LINK, link);
+        Log.i(CHAIN_ACTIVITY, Boolean.toString(link.ismIsCompleted()));
         startActivity(intent);
 
     }

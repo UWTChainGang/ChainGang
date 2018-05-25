@@ -46,6 +46,9 @@ public  class Link implements Serializable {
      */
     private String mLinkInst;
 
+
+
+
     /**
      * Initial flag if it's the last chain
      */
@@ -69,6 +72,12 @@ public  class Link implements Serializable {
 
     }
 
+    public void setmIsCompleted(boolean mIsCompleted) {
+        this.mIsCompleted = mIsCompleted;
+    }
+    public boolean ismIsCompleted() {
+        return mIsCompleted;
+    }
     public String getLinkId() {
         return getLINK_ID();
     }

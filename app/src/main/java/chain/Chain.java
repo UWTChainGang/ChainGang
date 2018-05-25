@@ -1,6 +1,8 @@
 
 package chain;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +19,7 @@ import link.Link;
  */
 public class Chain implements Serializable {
 
+    public static final String CHAIN_CLASS ="CHAIN CLASS";
     /**
      * Chain ID constant
      */
@@ -142,16 +145,17 @@ public class Chain implements Serializable {
                     for (int j = 0; j < linkArray.length(); j++) {
                         JSONObject linkobj = linkArray.getJSONObject(j);
                         Link newLink = new Link(linkobj.getString(Chain.LINK_ID),
+
                                 linkobj.getString(Chain.LINK_TEXT),
                                 linkobj.getString(Chain.LINK_INST),
                                 linkobj.getBoolean(Chain.IS_COMPLETED));
-
+                        Log.i(CHAIN_CLASS, newLink.getmLinkInst());
                         chaincontent.addLink(newLink);
 
 
                     }
 
-
+                    chaincontent.getLink(0).setmIsCompleted(true);
                 }
 
                 chainList.add(chaincontent);
@@ -225,6 +229,8 @@ public class Chain implements Serializable {
     public Link getLink (int x) {
         return this.mchainsInLink.get(x);
     }
+
+
 
 }
 
