@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.List;
+
 import chain.Chain;
 import link.Link;
 
@@ -25,6 +27,7 @@ public class ChainActivity extends AppCompatActivity
 
     public static final String CHAIN_ACTIVITY = "CHAIN_ACTIVITY";
     public static final String EXTRA_LINK = "extra_link";
+    public final static String EXTRA_CHAIN = "extra_chain";
 
     /**
      * Initialize the ChainList Fragment
@@ -65,13 +68,13 @@ public class ChainActivity extends AppCompatActivity
     /**
      * Implementation of OnLinkListFragmentInteractionListener interface
      *
-     * @param link for reference of its links.
+     * @param theLink for reference of its links.
      */
     @Override
-    public void onLinkSelected(Link link) {
+    public void onLinkSelected(Link theLink) {
         Intent intent = new Intent(this, LinkActivity.class);
-        intent.putExtra(EXTRA_LINK, link);
-        Log.i(CHAIN_ACTIVITY, Boolean.toString(link.ismIsCompleted()));
+        intent.putExtra(EXTRA_LINK, theLink);
+        Log.i(CHAIN_ACTIVITY, "link ID: " + theLink.getLinkId());
         startActivity(intent);
 
     }

@@ -33,6 +33,7 @@ import data.ChainDB;
 public class ChainListFragment extends Fragment {
 
     public final static String CHAIN_SELECTED = "chain_selected";
+
     /**
      * Constant for column counter
      */

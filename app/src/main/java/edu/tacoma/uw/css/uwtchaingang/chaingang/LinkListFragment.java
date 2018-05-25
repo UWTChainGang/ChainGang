@@ -6,12 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import chain.Chain;
@@ -24,6 +26,8 @@ import link.Link;
  * interface.
  */
 public class LinkListFragment extends Fragment {
+
+    public final static String LINK_LIST_FRAGMENT = "LINK_LIST_FRAGMENT";
     public final static String CHAIN_SELECTED = "chain_selected";
     public final static String LINK_SELECTED = "link_selected";
 
@@ -79,7 +83,8 @@ public class LinkListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyLinkRecyclerViewAdapter(mChain.getMchainsInLink(), mListener));
+            Log.i(LINK_LIST_FRAGMENT, "next link's isComplete" + Boolean.toString(mChain.getMchainsInLink().get(2).ismIsCompleted()));
+            recyclerView.setAdapter(new MyLinkRecyclerViewAdapter(mChain, mListener));
         }
         return view;
     }
@@ -115,6 +120,6 @@ public class LinkListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnLinkListFragmentInteractionListener {
-        void onLinkSelected(Link item);
+        void onLinkSelected(Link theLink);
     }
 }

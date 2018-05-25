@@ -34,7 +34,7 @@ public  class Link implements Serializable {
     /**
      * Initial link ID
      */
-    private String mLinkID;
+    private int mLinkID;
 
     /**
      * Initial link text
@@ -62,7 +62,7 @@ public  class Link implements Serializable {
      * @param theLinkInstructions given link instruction
      * @param theIsCompleted given flag if it's the last chain
      */
-    public Link(String theLinkID, String theLinkText, String theLinkInstructions, boolean theIsCompleted) {
+    public Link(int theLinkID, String theLinkText, String theLinkInstructions, boolean theIsCompleted) {
 
         setmLinkID(theLinkID);
         setmLinkText(theLinkText);
@@ -78,8 +78,8 @@ public  class Link implements Serializable {
     public boolean ismIsCompleted() {
         return mIsCompleted;
     }
-    public String getLinkId() {
-        return getLINK_ID();
+    public int getLinkId() {
+        return mLinkID;
     }
 
     public String getLINK_ID() {
@@ -98,11 +98,11 @@ public  class Link implements Serializable {
         return IS_COMPLETED;
     }
 
-    public String getmLinkID() {
+    public int getmLinkID() {
         return mLinkID;
     }
 
-    public void setmLinkID(String mLinkID) {
+    public void setmLinkID(int mLinkID) {
         this.mLinkID = mLinkID;
     }
 
