@@ -12,17 +12,14 @@ import link.Link;
 
 import java.util.List;
 
-/**
 
- * TODO: Replace the implementation with code for your data type.
- */
 public class MyLinkRecyclerViewAdapter extends RecyclerView.Adapter<MyLinkRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Link> mValues;
+    private final Chain mChain;
     private final OnLinkListFragmentInteractionListener mListener;
 
-    public MyLinkRecyclerViewAdapter(List<Link> items, OnLinkListFragmentInteractionListener listener) {
-        mValues = items;
+    public MyLinkRecyclerViewAdapter(Chain theChain, OnLinkListFragmentInteractionListener listener) {
+        mChain = theChain;
         mListener = listener;
     }
 
@@ -35,16 +32,16 @@ public class MyLinkRecyclerViewAdapter extends RecyclerView.Adapter<MyLinkRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getmLinkText());
-        holder.mContentView.setText(Boolean.toString(mValues.get(position).ismIsCompleted()));
+        holder.mLink = mChain.getMchainsInLink().get(position);
+        holder.mIdView.setText(mChain.getMchainsInLink().get(position).getmLinkText());
+        holder.mContentView.setText(Boolean.toString(mChain.getMchainsInLink().get(position).ismIsCompleted()));
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onLinkSelected(holder.mItem);
+                    mListener.onLinkSelected(holder.mLink, mChain);
                 }
             }
         });
@@ -52,14 +49,14 @@ public class MyLinkRecyclerViewAdapter extends RecyclerView.Adapter<MyLinkRecycl
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mChain.getMchainsInLink().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public Link mItem;
+        public Link mLink;
 
         public ViewHolder(View view) {
             super(view);

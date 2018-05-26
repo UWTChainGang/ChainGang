@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.List;
+
 import chain.Chain;
 import link.Link;
 
@@ -25,6 +27,7 @@ public class ChainActivity extends AppCompatActivity
 
     public static final String CHAIN_ACTIVITY = "CHAIN_ACTIVITY";
     public static final String EXTRA_LINK = "extra_link";
+    public final static String EXTRA_CHAIN = "extra_chain";
 
     /**
      * Initialize the ChainList Fragment
@@ -37,11 +40,24 @@ public class ChainActivity extends AppCompatActivity
         setContentView(R.layout.activity_chain);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ChainListFragment chainListFragment = new ChainListFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.chain_container, chainListFragment)
-                .commit();
-
+        Intent intent = getIntent();
+        if (intent.getSerializableExtra(ChainListFragment.CHAIN_SELECTED) != null) {
+            Log.i(CHAIN_ACTIVITY, "new chain should be here");
+            Chain chain = (Chain) intent.getSerializableExtra(ChainListFragment.CHAIN_SELECTED);
+            LinkListFragment linkListFragment = new LinkListFragment();
+            Bundle args = new Bundle();
+            args.putSerializable(ChainListFragment.CHAIN_SELECTED, chain);
+            linkListFragment.setArguments(args);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.chain_container, linkListFragment)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            ChainListFragment chainListFragment = new ChainListFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.chain_container, chainListFragment)
+                    .commit();
+        }
     }
 
     /**
@@ -65,13 +81,14 @@ public class ChainActivity extends AppCompatActivity
     /**
      * Implementation of OnLinkListFragmentInteractionListener interface
      *
-     * @param link for reference of its links.
+     * @param theLink for reference of its links.
      */
     @Override
-    public void onLinkSelected(Link link) {
+    public void onLinkSelected(Link theLink, Chain theChain) {
         Intent intent = new Intent(this, LinkActivity.class);
-        intent.putExtra(EXTRA_LINK, link);
-        Log.i(CHAIN_ACTIVITY, Boolean.toString(link.ismIsCompleted()));
+        intent.putExtra(EXTRA_LINK, theLink);
+        intent.putExtra(EXTRA_CHAIN, theChain);
+        Log.i(CHAIN_ACTIVITY, "link ID: " + theLink.getLinkId());
         startActivity(intent);
 
     }

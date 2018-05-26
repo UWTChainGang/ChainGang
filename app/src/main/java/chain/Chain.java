@@ -144,7 +144,7 @@ public class Chain implements Serializable {
                 if (linkArray != null) {
                     for (int j = 0; j < linkArray.length(); j++) {
                         JSONObject linkobj = linkArray.getJSONObject(j);
-                        Link newLink = new Link(linkobj.getString(Chain.LINK_ID),
+                        Link newLink = new Link(linkobj.getInt(Chain.LINK_ID),
 
                                 linkobj.getString(Chain.LINK_TEXT),
                                 linkobj.getString(Chain.LINK_INST),
@@ -170,6 +170,7 @@ public class Chain implements Serializable {
     public ArrayList<Link> getMchainsInLink() {
         return mchainsInLink;
     }
+    public void setMchainsInLink(ArrayList<Link> theLinks) {this.mchainsInLink = theLinks; }
 
     public String getmChainID() {
         return mChainID;
@@ -231,6 +232,9 @@ public class Chain implements Serializable {
     }
 
 
+    public int getChainLength() {
+        return this.mchainsInLink.size();
+    }
 
 }
 
