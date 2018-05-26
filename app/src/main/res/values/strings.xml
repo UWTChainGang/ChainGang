@@ -14,7 +14,8 @@
     <string name="txt_fname">First Name</string>
     <string name="txt_lname">Last Name</string>
     <string name="txt_email">Email</string>
-    <string name="txt_password">Password (at least 6 characters)</string>
+    <string name="txt_add_member_password">Password (min 8 symbols: @#23WEwe)</string>
+    <string name="txt_login_password">Password</string>
     <string name="txt_pass_confirm">Confirm Password</string>
 
     <string name="txt_chains">Chains</string>
@@ -38,3 +39,6 @@
     - <!--  *************************************************** -->
 
 </resources>
+
+
+<!-- <string name="txt_password">Password (min 8 symbols: @#23WEwe)</string> -->

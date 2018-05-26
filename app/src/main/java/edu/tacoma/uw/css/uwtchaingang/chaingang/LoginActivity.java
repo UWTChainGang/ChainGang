@@ -227,7 +227,17 @@ public class LoginActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "Account Created "
                             , Toast.LENGTH_LONG)
                             .show();
-                    launchLoginCredentials();
+
+
+                    // ************************************************************************
+                    // OLD
+                    // launchLoginCredentials();
+
+                    // NEW
+                    launchChains();
+                    // ************************************************************************
+
+
                 } else if (mMember.getmStatus().equals((Member.USER_ALREADY_EXISTS))) {
                     Toast.makeText(getApplicationContext(), "Email already in use "
                             , Toast.LENGTH_LONG)
