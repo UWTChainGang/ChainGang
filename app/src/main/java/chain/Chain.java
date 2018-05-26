@@ -170,6 +170,7 @@ public class Chain implements Serializable {
     public ArrayList<Link> getMchainsInLink() {
         return mchainsInLink;
     }
+    public void setMchainsInLink(ArrayList<Link> theLinks) {this.mchainsInLink = theLinks; }
 
     public String getmChainID() {
         return mChainID;

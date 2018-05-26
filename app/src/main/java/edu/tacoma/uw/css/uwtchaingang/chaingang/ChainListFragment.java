@@ -167,10 +167,10 @@ public class ChainListFragment extends Fragment {
             } else {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-
-            ChainAsyncTask courseAsyncTask = new ChainAsyncTask();
-            courseAsyncTask.execute(new String[]{chainURL});
-            Log.i("AdapterTag", "RecyclerView Launched");
+//              not need i think
+//            ChainAsyncTask chainAsyncTask = new ChainAsyncTask();
+//            chainAsyncTask.execute(new String[]{chainURL});
+//            Log.i("AdapterTag", "RecyclerView Launched");
         }
 
         ConnectivityManager connMgr

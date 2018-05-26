@@ -40,11 +40,24 @@ public class ChainActivity extends AppCompatActivity
         setContentView(R.layout.activity_chain);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ChainListFragment chainListFragment = new ChainListFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.chain_container, chainListFragment)
-                .commit();
-
+        Intent intent = getIntent();
+        if (intent.getSerializableExtra(ChainListFragment.CHAIN_SELECTED) != null) {
+            Log.i(CHAIN_ACTIVITY, "new chain should be here");
+            Chain chain = (Chain) intent.getSerializableExtra(ChainListFragment.CHAIN_SELECTED);
+            LinkListFragment linkListFragment = new LinkListFragment();
+            Bundle args = new Bundle();
+            args.putSerializable(ChainListFragment.CHAIN_SELECTED, chain);
+            linkListFragment.setArguments(args);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.chain_container, linkListFragment)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            ChainListFragment chainListFragment = new ChainListFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.chain_container, chainListFragment)
+                    .commit();
+        }
     }
 
     /**
@@ -71,9 +84,10 @@ public class ChainActivity extends AppCompatActivity
      * @param theLink for reference of its links.
      */
     @Override
-    public void onLinkSelected(Link theLink) {
+    public void onLinkSelected(Link theLink, Chain theChain) {
         Intent intent = new Intent(this, LinkActivity.class);
         intent.putExtra(EXTRA_LINK, theLink);
+        intent.putExtra(EXTRA_CHAIN, theChain);
         Log.i(CHAIN_ACTIVITY, "link ID: " + theLink.getLinkId());
         startActivity(intent);
 

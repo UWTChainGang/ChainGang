@@ -1,16 +1,27 @@
 package link;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import chain.Chain;
 
 /**
  * Creating a link between chains
  */
 public  class Link implements Serializable {
 
+    public static final String LINK_CLASS = "LINK_CLASS";
     /**
      * Chain link constant
      */
-    public static final String LINKSTRING = "links";
+    public static final String LINKS = "LINKS";
 
     /**
      * Chain link ID constant
@@ -49,6 +60,8 @@ public  class Link implements Serializable {
 
 
 
+
+
     /**
      * Initial flag if it's the last chain
      */
@@ -72,6 +85,29 @@ public  class Link implements Serializable {
 
     }
 
+    public static ArrayList<Link> parseLinkJSON(String linkJSON) throws JSONException {
+        ArrayList<Link> linkList = new ArrayList<Link>();
+        if (linkJSON != null) {
+            JSONArray arr = new JSONArray(linkJSON);
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject obj = arr.getJSONObject(i);
+                JSONArray linkArray = obj.getJSONArray(LINKS);
+                for (int j = 0; j < linkArray.length(); j++) {
+
+                    JSONObject linkobj = linkArray.getJSONObject(j);
+                    Log.i(LINK_CLASS, linkobj.toString());
+                    Link newLink = new Link(linkobj.getInt(Link.LINK_ID),
+
+                            linkobj.getString(Link.LINK_TEXT),
+                            linkobj.getString(Link.LINK_INST),
+                            linkobj.getBoolean(Link.IS_COMPLETED));
+                    Log.i(LINK_CLASS, newLink.getmLinkInst());
+                    linkList.add(newLink);
+                }
+            }
+        }
+        return linkList;
+    }
     public void setmIsCompleted(boolean mIsCompleted) {
         this.mIsCompleted = mIsCompleted;
     }
