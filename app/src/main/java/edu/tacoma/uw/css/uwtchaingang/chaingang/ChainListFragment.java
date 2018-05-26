@@ -22,10 +22,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 
 import chain.Chain;
 import data.ChainDB;
+
+import static android.support.constraint.Constraints.TAG;
 
 /**
  * Fragment to handle chain list processes
@@ -42,7 +45,7 @@ public class ChainListFragment extends Fragment {
     /**
      * Link to the chain table in the database
      */
-    private static final String chainURL = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/chains?member=ab@ab.com";
+    private static final String CHAINURL = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/chains?";//member=ab@ab.com";
 
     /**
      * Column counter initializer
@@ -162,7 +165,7 @@ public class ChainListFragment extends Fragment {
 //        for (String key: bundle.keySet()) {
 //            Log.d("CHAINLISTFRAG", key + " is a kiey");
 //        }
-        //Log.i("CHAINLISTFRAGMENT",bundle.toString());
+        Log.i("CHAINLISTFRAGMENT",bundle.toString());
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -185,9 +188,10 @@ public class ChainListFragment extends Fragment {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-
+            String email = bundle.getString("USER");
+            String theChainUrl = buildChainURL(view,email);
             ChainAsyncTask chainAsyncTask = new ChainAsyncTask();
-            chainAsyncTask.execute(new String[]{chainURL});
+            chainAsyncTask.execute(new String[]{theChainUrl});
 
         } else {
 
@@ -248,6 +252,31 @@ public class ChainListFragment extends Fragment {
         mListener = null;
     }
 
+
+
+    /**
+     * Building the string member url
+     *
+     * @param v view
+     * @return string with user name and password
+     */
+    private String buildChainURL(View v, String email) {
+
+        StringBuilder sb = new StringBuilder(CHAINURL);
+
+        try {
+
+            sb.append("member=");
+            sb.append(URLEncoder.encode(email, "UTF-8"));
+
+
+        }
+        catch(Exception e) {
+            Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
+                    .show();
+        }
+        return sb.toString();
+    }
     /**
      * This interface to allow an interaction in this fragment to be communicated
      * to the Chain Activity and other fragments contained in the Activity.

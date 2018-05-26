@@ -236,10 +236,10 @@ public class LoginActivity extends AppCompatActivity
 
                     // ************************************************************************
                     // OLD
-                    // launchLoginCredentials();
+                    launchLoginCredentials();
 
                     // NEW
-                    launchChains();
+                    //launchChains();
                     // ************************************************************************
 
 
