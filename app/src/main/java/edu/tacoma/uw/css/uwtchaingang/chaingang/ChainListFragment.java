@@ -42,7 +42,7 @@ public class ChainListFragment extends Fragment {
     /**
      * Link to the chain table in the database
      */
-    private static final String chainURL = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/chains";
+    private static final String chainURL = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/chains?member=ab@ab.com";
 
     /**
      * Column counter initializer
@@ -101,6 +101,7 @@ public class ChainListFragment extends Fragment {
         Log.i("ChainListFragment", "onCreate Called from class: ChainListFragment.java");
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            //Log.i("CHAINLISTFRAGMENT",getArguments().getString("USER"));
         }
     }
 
@@ -156,7 +157,12 @@ public class ChainListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_chain_list, container, false);
-
+        //Log.i("CHAINLISTFRAGMENT",getArguments().getString("USER"));
+        Bundle bundle = getArguments();
+//        for (String key: bundle.keySet()) {
+//            Log.d("CHAINLISTFRAG", key + " is a kiey");
+//        }
+        //Log.i("CHAINLISTFRAGMENT",bundle.toString());
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -348,7 +354,6 @@ public class ChainListFragment extends Fragment {
                     mChainDB.insertChain(chain.getmChainID(),
                             chain.getmChainTitle(),
                             chain.getmChainDesc(),
-                            chain.getmWardenID(),
                             chain.getmMemberID());
 
                 }

@@ -35,10 +35,7 @@ public class Chain implements Serializable {
      */
     public static final String CHAINDESC = "chainDesc";
 
-    /**
-     * Chain warden ID constant
-     */
-    public static final String WARDENID = "warden";
+
 
     /**
      * Chain member ID constant
@@ -85,10 +82,6 @@ public class Chain implements Serializable {
      */
     private String mChainDesc;
 
-    /**
-     * Initial warden ID
-     */
-    private String mWardenID;
 
     /**
      * Initial member ID
@@ -108,16 +101,15 @@ public class Chain implements Serializable {
      * @param theChainID given chain ID
      * @param theChainTitle given chain title
      * @param theChainDescription given chain description
-     * @param theWardenID given warden ID
      * @param theMemberID given member ID
      */
-    public Chain(String theChainID, String theChainTitle, String theChainDescription, String theWardenID,
+    public Chain(String theChainID, String theChainTitle, String theChainDescription,
                         String theMemberID) {
 
         setmChainID(theChainID);
         setmChainTitle(theChainTitle);
         setmChainDesc(theChainDescription);
-        setmWardenID(theWardenID);
+
         setmMemberID(theMemberID);
         //mIsChainComplete = theChainComplete;
 
@@ -138,7 +130,7 @@ public class Chain implements Serializable {
                 JSONObject obj = arr.getJSONObject(i);
                 Chain chaincontent = new Chain(obj.getString(Chain._CHAINID),
                         obj.getString(Chain.CHAINTITLE), obj.getString(Chain.CHAINDESC),
-                        obj.getString(Chain.WARDENID), obj.getString(Chain.MEMBERID));
+                        obj.getString(Chain.MEMBERID));
 
                 JSONArray linkArray = obj.getJSONArray(LINKSTRING);
                 if (linkArray != null) {
@@ -196,13 +188,6 @@ public class Chain implements Serializable {
         this.mChainDesc = mChainDesc;
     }
 
-    public String getmWardenID() {
-        return mWardenID;
-    }
-
-    public void setmWardenID(String mWardenID) {
-        this.mWardenID = mWardenID;
-    }
 
     public String getmMemberID() {
         return mMemberID;

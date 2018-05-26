@@ -41,6 +41,7 @@ public class ChainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
+        //Log.i(CHAIN_ACTIVITY,intent.getStringExtra("USER"));
         if (intent.getSerializableExtra(ChainListFragment.CHAIN_SELECTED) != null) {
             Log.i(CHAIN_ACTIVITY, "new chain should be here");
             Chain chain = (Chain) intent.getSerializableExtra(ChainListFragment.CHAIN_SELECTED);
@@ -53,7 +54,11 @@ public class ChainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
         } else {
+            //Log.i(CHAIN_ACTIVITY,intent.getStringExtra("USER"));
             ChainListFragment chainListFragment = new ChainListFragment();
+            Bundle args = new Bundle();
+            args.putString("USER", intent.getStringExtra("USER"));
+            chainListFragment.setArguments(args);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.chain_container, chainListFragment)
                     .commit();
