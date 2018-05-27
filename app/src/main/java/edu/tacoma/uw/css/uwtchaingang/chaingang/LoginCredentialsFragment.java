@@ -131,7 +131,8 @@ public class LoginCredentialsFragment extends Fragment {
                             .show();
                     mMemberPassword.requestFocus();
                 } else {
-                    mListener.validateCredentials(buildMemberURL(v));
+                    //mListener.validateCredentials(buildMemberURL(v));//TODO: maybe email
+                    mListener.validateCredentials(buildMemberURL(v), email);
                 }
 
                 // ************************************************************************
@@ -223,7 +224,7 @@ public class LoginCredentialsFragment extends Fragment {
     public interface OnLoginCredentialsFragmentInteractionListener {
 
         void launchLoginCredentials();
-        void validateCredentials(String url);
+        void validateCredentials(String url, String email);
         void launchChains();
     }
 }

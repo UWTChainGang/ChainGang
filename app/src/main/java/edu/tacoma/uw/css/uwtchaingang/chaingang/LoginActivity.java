@@ -35,7 +35,9 @@ public class LoginActivity extends AppCompatActivity
      * Constant of positive response if a member exists
      */
     public static final String USER_AUTHENTICATED = "USER_AUTHENTICATED";
+    public static final String USER = "USER";
     private Member mMember;
+    private String mEmail;
 
     /**
      * The activity name for Logging.
@@ -130,6 +132,7 @@ public class LoginActivity extends AppCompatActivity
     @Override
     public void launchChains() {
         Intent intent = new Intent(this, ChainActivity.class);
+        intent.putExtra(USER, mEmail);
         startActivity(intent);
     }
 
@@ -139,7 +142,9 @@ public class LoginActivity extends AppCompatActivity
      * @param url a member input data
      */
     @Override
-    public void validateCredentials(String url) {
+    public void validateCredentials(String url, String email) {
+        Log.i(LOGIN_ACTIVITY,email);
+        this.mEmail = email;
         AuthenticateMemberTask task = new AuthenticateMemberTask();
         task.execute(new String[]{url.toString()});
 
@@ -231,10 +236,10 @@ public class LoginActivity extends AppCompatActivity
 
                     // ************************************************************************
                     // OLD
-                    // launchLoginCredentials();
+                    launchLoginCredentials();
 
                     // NEW
-                    launchChains();
+                    //launchChains();
                     // ************************************************************************
 
 

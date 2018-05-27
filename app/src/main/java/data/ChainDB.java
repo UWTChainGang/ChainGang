@@ -74,7 +74,6 @@ public class ChainDB {
      * @param _id
      * @param chainTitle
      * @param chainDesc
-     * @param warden
      * @param member
     //     * @param isChainCompleted
     //     * @param dtg_Created
@@ -96,14 +95,12 @@ public class ChainDB {
     public boolean insertChain(String _id,
                                String chainTitle,
                                String chainDesc,
-                               String warden,
                                String member) {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("_id", _id);
         contentValues.put("chainTitle", chainTitle);
         contentValues.put("chainDesc", chainDesc);
-        contentValues.put("warden", warden);
         contentValues.put("member", member);
 /*
         contentValues.put("isChainCompleted", isChainCompleted);
@@ -194,7 +191,6 @@ public class ChainDB {
                 "_id",
                 "chainTitle",
                 "chainDesc",
-                "warden",
                 "member"
         };
 
@@ -217,10 +213,9 @@ public class ChainDB {
             String _id = c.getString(0);
             String chainTitle = c.getString(1);
             String chainDesc = c.getString(2);
-            String warden = c.getString(3);
-            String member = c.getString(4);
+            String member = c.getString(3);
 
-            Chain chain = new Chain(_id, chainTitle, chainDesc, warden, member);
+            Chain chain = new Chain(_id, chainTitle, chainDesc, member);
             list.add(chain);
             c.moveToNext();
         }

@@ -18,6 +18,8 @@ import chain.Chain;
 public  class Link implements Serializable {
 
     public static final String LINK_CLASS = "LINK_CLASS";
+    public static final String EXT_URL = "externalURL";
+    public static final String EXT_URL_NAME = "siteName";
     /**
      * Chain link constant
      */
@@ -58,7 +60,10 @@ public  class Link implements Serializable {
     private String mLinkInst;
 
 
+    private String mExtURL;
 
+
+    private String mExtSiteName;
 
 
 
@@ -75,8 +80,10 @@ public  class Link implements Serializable {
      * @param theLinkInstructions given link instruction
      * @param theIsCompleted given flag if it's the last chain
      */
-    public Link(int theLinkID, String theLinkText, String theLinkInstructions, boolean theIsCompleted) {
-
+    public Link(int theLinkID, String theLinkText, String theLinkInstructions,
+                boolean theIsCompleted, String theUrl, String theSiteName) {
+        setmExtURL(theUrl);
+        setmExtSiteName(theSiteName);
         setmLinkID(theLinkID);
         setmLinkText(theLinkText);
         setmLinkInst(theLinkInstructions);
@@ -100,7 +107,9 @@ public  class Link implements Serializable {
 
                             linkobj.getString(Link.LINK_TEXT),
                             linkobj.getString(Link.LINK_INST),
-                            linkobj.getBoolean(Link.IS_COMPLETED));
+                            linkobj.getBoolean(Link.IS_COMPLETED),
+                            linkobj.getString(Link.EXT_URL),
+                            linkobj.getString(Link.EXT_URL_NAME));
                     Log.i(LINK_CLASS, newLink.getmLinkInst());
                     linkList.add(newLink);
                 }
@@ -118,6 +127,22 @@ public  class Link implements Serializable {
         return mLinkID;
     }
 
+    public String getmExtSiteName() {
+        return mExtSiteName;
+    }
+
+    public void setmExtSiteName(String mExtSiteName) {
+        this.mExtSiteName = mExtSiteName;
+    }
+
+
+    public String getmExtURL() {
+        return mExtURL;
+    }
+
+    public void setmExtURL(String mExtURL) {
+        this.mExtURL = mExtURL;
+    }
     public String getLINK_ID() {
         return LINK_ID;
     }

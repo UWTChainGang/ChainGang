@@ -34,7 +34,14 @@ public class MyLinkRecyclerViewAdapter extends RecyclerView.Adapter<MyLinkRecycl
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mLink = mChain.getMchainsInLink().get(position);
         holder.mIdView.setText(mChain.getMchainsInLink().get(position).getmLinkText());
-        holder.mContentView.setText(Boolean.toString(mChain.getMchainsInLink().get(position).ismIsCompleted()));
+        String isCompleteable = "";
+        if (mChain.getMchainsInLink().get(position).ismIsCompleted()) {
+            isCompleteable = "UNLOCKED: ";
+        } else {
+            isCompleteable = "  LOCKED: ";
+        }
+        //holder.mContentView.setText(Boolean.toString(mChain.getMchainsInLink().get(position).ismIsCompleted()));
+        holder.mContentView.setText(isCompleteable);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
