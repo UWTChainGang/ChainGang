@@ -1,6 +1,7 @@
 package edu.tacoma.uw.css.uwtchaingang.chaingang;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
@@ -20,6 +22,7 @@ public class LoginFragment extends Fragment {
      */
     private OnLoginFragmentInteractionListener mListener;
 
+    private TextView mTextView;
     /**
      * Required empty public constructor
      */
@@ -78,6 +81,15 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((LoginActivity)getActivity()).launchLoginCredentials();
+            }
+        });
+        mTextView = (TextView) view.findViewById(R.id.t_and_c);
+        mTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri webpage = Uri.parse("http://chaingangwebservice.us-west-2.elasticbeanstalk.com/tos");
+                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                startActivity(intent);
             }
         });
 
