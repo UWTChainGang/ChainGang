@@ -28,10 +28,10 @@
     <string name="title_activity_link">LinkActivity</string>
 
     <string name="no_external_res">No External Resources for this Link.</string>
-    <string name="external_res_title">External Resource(s):</string>
+    <string name="external_res_title">External Resource:</string>
     <string name="complete_link">COMPLETE LINK</string>
     <string name="link_notes">Notes for this link:</string>
-    <string name="tasks">Link Task(s):</string>
+    <string name="tasks">Link Task:</string>
     <!--  *************************************************** -->
     <string name="LOGIN_PREFS">edu.tacoma.uw.css.uwtchaingang.chaingang.PREFS</string>
     <string name="LOGGEDIN">loggedin</string>

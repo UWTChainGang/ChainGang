@@ -63,11 +63,11 @@ public class LinkActivity extends AppCompatActivity {
         mTaskCheckerA = (CheckBox) findViewById(R.id.taskCheckerA);
         mTaskCheckerA.setText(mLink.getmLinkInst());
         mExtResA = (TextView) findViewById(R.id.externalResA);
-        mExtResA.setText("Eggcelent Facts");
+        mExtResA.setText(mLink.getmExtSiteName());
         mExtResA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri webpage = Uri.parse("https://www.eatthis.com/egg-facts/");
+                Uri webpage = Uri.parse(mLink.getmExtURL());
                 Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
                 startActivity(intent);
             }
@@ -81,15 +81,17 @@ public class LinkActivity extends AppCompatActivity {
             completeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ConnectivityManager connMgr
-                            = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                    if (mTaskCheckerA.isChecked()) {
+                        ConnectivityManager connMgr
+                                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-                    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-                    if (networkInfo != null && networkInfo.isConnected()) {
-                        String notifyURL = buildNotifyWardenURL();
-                        NotifyAsyncTask notifyAsync = new NotifyAsyncTask();
-                        notifyAsync.execute(new String[]{notifyURL});
+                        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                        if (networkInfo != null && networkInfo.isConnected()) {
+                            String notifyURL = buildNotifyWardenURL();
+                            NotifyAsyncTask notifyAsync = new NotifyAsyncTask();
+                            notifyAsync.execute(new String[]{notifyURL});
 
+                        }
                     }
                 }
             });

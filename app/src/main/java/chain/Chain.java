@@ -140,14 +140,16 @@ public class Chain implements Serializable {
 
                                 linkobj.getString(Chain.LINK_TEXT),
                                 linkobj.getString(Chain.LINK_INST),
-                                linkobj.getBoolean(Chain.IS_COMPLETED));
+                                linkobj.getBoolean(Chain.IS_COMPLETED),
+                                linkobj.getString(Link.EXT_URL),
+                                linkobj.getString(Link.EXT_URL_NAME));
                         Log.i(CHAIN_CLASS, newLink.getmLinkInst());
                         chaincontent.addLink(newLink);
 
 
                     }
 
-                    chaincontent.getLink(0).setmIsCompleted(true);
+                    //chaincontent.getLink(0).setmIsCompleted(true);
                 }
 
                 chainList.add(chaincontent);
