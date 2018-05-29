@@ -51,7 +51,7 @@ public class ChainActivity extends AppCompatActivity
             linkListFragment.setArguments(args);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.chain_container, linkListFragment)
-                    .addToBackStack(null)
+                    //.addToBackStack(null)
                     .commit();
         } else {
             //Log.i(CHAIN_ACTIVITY,intent.getStringExtra("USER"));
@@ -93,7 +93,7 @@ public class ChainActivity extends AppCompatActivity
         Intent intent = new Intent(this, LinkActivity.class);
         intent.putExtra(EXTRA_LINK, theLink);
         intent.putExtra(EXTRA_CHAIN, theChain);
-        Log.i(CHAIN_ACTIVITY, "link ID: " + theLink.getLinkId());
+        Log.i(CHAIN_ACTIVITY, "link ID: " + theLink.getmLinkID());
         startActivity(intent);
 
     }

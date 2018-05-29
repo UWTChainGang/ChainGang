@@ -49,7 +49,6 @@ public class LinkActivity extends AppCompatActivity {
     private Chain mChain;
     private CheckBox mTaskCheckerA;
     private TextView mExtResA;
-    private EditText mLinkNotes;
 
 
     @Override
@@ -73,7 +72,6 @@ public class LinkActivity extends AppCompatActivity {
             }
         });
         mExtResA.setMovementMethod(LinkMovementMethod.getInstance());
-        mLinkNotes = (EditText) findViewById(R.id.editLinkNotes) ;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Button completeButton = findViewById(R.id.completeButton);
@@ -102,6 +100,7 @@ public class LinkActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ChainActivity.class);
         intent.putExtra(ChainListFragment.CHAIN_SELECTED, mChain);
         startActivity(intent);
+        finish();
     }
     /**
      * Building the string member url

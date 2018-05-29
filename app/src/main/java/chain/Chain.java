@@ -13,39 +13,50 @@ import java.util.List;
 
 import link.Link;
 
-
 /**
- * Class provides functionality of a chain object
+ * The Serializable class 'Chain' is the foundational Object of the ChainGang
+ * Mobile Android Application.  It's attributes are representative of a real world
+ * process, or Chain of events. The Chain object 'Has-A' list of {@link Link} Links representing
+ * processes in the sequence of events to be followed.
+ *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 20 May 2017
  */
 public class Chain implements Serializable {
 
-    public static final String CHAIN_CLASS ="CHAIN CLASS";
+
+
+    /**
+     * Class Identifier Logging Constant
+     */
+    private static final String CHAIN_CLASS ="CHAIN CLASS";
     /**
      * Chain ID constant
      */
-    public static final String _CHAINID = "_id";
+    private static final String _CHAINID = "_id";
 
     /**
      * Chain title constant
      */
-    public static final String CHAINTITLE = "chainTitle";
+    private static final String CHAINTITLE = "chainTitle";
 
     /**
      * Chain description constant
      */
-    public static final String CHAINDESC = "chainDesc";
-
+    private static final String CHAINDESC = "chainDesc";
 
 
     /**
      * Chain member ID constant
      */
-    public static final String MEMBERID = "member";
+    private static final String MEMBERID = "member";
 
     /**
      * Chain link constant
      */
-    public static final String LINKSTRING = "links";
+    private static final String LINKSTRING = "links";
 
     /**
      * Chain link ID constant
@@ -82,16 +93,14 @@ public class Chain implements Serializable {
      */
     private String mChainDesc;
 
-
     /**
      * Initial member ID
      */
     private String mMemberID;
 
 
-
     /**
-     * Chain links
+     * Chain Links {@link Link}
      */
     private ArrayList<Link> mchainsInLink = new ArrayList<>();
 
@@ -105,18 +114,14 @@ public class Chain implements Serializable {
      */
     public Chain(String theChainID, String theChainTitle, String theChainDescription,
                         String theMemberID) {
-
         setmChainID(theChainID);
         setmChainTitle(theChainTitle);
         setmChainDesc(theChainDescription);
-
         setmMemberID(theMemberID);
-        //mIsChainComplete = theChainComplete;
-
     }
 
     /**
-     * Parsing the given JSON chain object and link chains
+     * Parsing the given JSON list of links and returns them to be added to a Chain object
      *
      * @param chainJSON given JSON object
      * @return chain list
@@ -131,13 +136,11 @@ public class Chain implements Serializable {
                 Chain chaincontent = new Chain(obj.getString(Chain._CHAINID),
                         obj.getString(Chain.CHAINTITLE), obj.getString(Chain.CHAINDESC),
                         obj.getString(Chain.MEMBERID));
-
                 JSONArray linkArray = obj.getJSONArray(LINKSTRING);
                 if (linkArray != null) {
                     for (int j = 0; j < linkArray.length(); j++) {
                         JSONObject linkobj = linkArray.getJSONObject(j);
                         Link newLink = new Link(linkobj.getInt(Chain.LINK_ID),
-
                                 linkobj.getString(Chain.LINK_TEXT),
                                 linkobj.getString(Chain.LINK_INST),
                                 linkobj.getBoolean(Chain.IS_COMPLETED),
@@ -145,18 +148,12 @@ public class Chain implements Serializable {
                                 linkobj.getString(Link.EXT_URL_NAME));
                         Log.i(CHAIN_CLASS, newLink.getmLinkInst());
                         chaincontent.addLink(newLink);
-
-
                     }
 
-                    //chaincontent.getLink(0).setmIsCompleted(true);
                 }
-
                 chainList.add(chaincontent);
             }
-
         }
-
         return chainList;
     }
 
@@ -169,7 +166,6 @@ public class Chain implements Serializable {
     public String getmChainID() {
         return mChainID;
     }
-
     public void setmChainID(String mChainID) {
         this.mChainID = mChainID;
     }
@@ -177,7 +173,6 @@ public class Chain implements Serializable {
     public String getmChainTitle() {
         return mChainTitle;
     }
-
     public void setmChainTitle(String mChainTitle) {
         this.mChainTitle = mChainTitle;
     }
@@ -185,16 +180,13 @@ public class Chain implements Serializable {
     public String getmChainDesc() {
         return mChainDesc;
     }
-
     public void setmChainDesc(String mChainDesc) {
         this.mChainDesc = mChainDesc;
     }
 
-
     public String getmMemberID() {
         return mMemberID;
     }
-
     public void setmMemberID(String mMemberID) {
         this.mMemberID = mMemberID;
     }
@@ -208,20 +200,7 @@ public class Chain implements Serializable {
         this.mchainsInLink.add(theLinkToAdd);
     }
 
-    /**
-     * Return a link from link array
-     *
-     * @param x link index
-     * @return found link
-     */
-    public Link getLink (int x) {
-        return this.mchainsInLink.get(x);
-    }
 
-
-    public int getChainLength() {
-        return this.mchainsInLink.size();
-    }
 
 }
 
