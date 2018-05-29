@@ -31,10 +31,18 @@ import data.ChainDB;
 import static android.support.constraint.Constraints.TAG;
 
 /**
- * Fragment to handle chain list processes
+ * The ListFragment for Chains {@link Chain}
+ *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 20 May 2017
  */
 public class ChainListFragment extends Fragment {
 
+    /**
+     * Constant for a selected chain key.
+     */
     public final static String CHAIN_SELECTED = "chain_selected";
 
     /**
@@ -58,7 +66,7 @@ public class ChainListFragment extends Fragment {
     private OnChainListFragmentInteractionListener mListener;
 
     /**
-     * Chain list
+     * List of Chains
      */
     private List<Chain> mChainList;
 
@@ -108,44 +116,6 @@ public class ChainListFragment extends Fragment {
         }
     }
 
-    // ***************************************************************
-    // OLD
-
-    /**
-     * Create a view for the chain list
-     *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return view
-     */
-/*
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chain_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            mRecyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            ChainAsyncTask courseAsyncTask = new ChainAsyncTask();
-            courseAsyncTask.execute(new String[]{chainURL});
-            Log.i("AdapterTag", "RecyclerView Launched");
-        }
-        return view;
-    }
-*/
-
-// ***************************************************************
-
-    // ***************************************************************
-    // CHANGED TO
     /**
      * Create a view for the chain list
      *
@@ -160,11 +130,9 @@ public class ChainListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_chain_list, container, false);
-        //Log.i("CHAINLISTFRAGMENT",getArguments().getString("USER"));
+
         Bundle bundle = getArguments();
-//        for (String key: bundle.keySet()) {
-//            Log.d("CHAINLISTFRAG", key + " is a kiey");
-//        }
+
         Log.i("CHAINLISTFRAGMENT",bundle.toString());
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -176,12 +144,7 @@ public class ChainListFragment extends Fragment {
             } else {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-//              not need i think
-//            ChainAsyncTask chainAsyncTask = new ChainAsyncTask();
-//            chainAsyncTask.execute(new String[]{chainURL});
-//            Log.i("AdapterTag", "RecyclerView Launched");
         }
-
         ConnectivityManager connMgr
                 = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -194,37 +157,19 @@ public class ChainListFragment extends Fragment {
             chainAsyncTask.execute(new String[]{theChainUrl});
 
         } else {
-
             Toast.makeText(view.getContext(),
                     "Displaying locally stored data",
                     Toast.LENGTH_LONG).show();
-
-//            LayoutInflater myInflater = LayoutInflater.from(this);
-//            Toast toast = new Toast(view.getContext());
-//            toast.setView(view);
-//            toast.setDuration(Toast.LENGTH_LONG);
-//            toast.setGravity(Gravity.TOP, 0, 0);
-//            toast.show();
-
-
-
             if (mChainDB == null) {
                 mChainDB = new ChainDB(getActivity());
             }
-
             if (mChainList == null) {
                 mChainList = mChainDB.getChains();
             }
-
             mRecyclerView.setAdapter(new MyChainRecyclerViewAdapter(mChainList, mListener));
         }
-
-
-
         return view;
     }
-    // ***************************************************************
-
 
 
     /**
@@ -251,8 +196,6 @@ public class ChainListFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
-
 
     /**
      * Building the string member url
@@ -290,11 +233,6 @@ public class ChainListFragment extends Fragment {
      * Class to get a list of chains, synchronized with the member database
      */
     private class ChainAsyncTask extends AsyncTask<String, Void, String> {
-
-
-        // ***************************************************************
-        //private ChainDB mChainDB;
-        // ***************************************************************
 
         @Override
         protected String doInBackground(String... urls) {
@@ -352,20 +290,6 @@ public class ChainListFragment extends Fragment {
                 return;
             }
 
-
-            // ***************************************************************
-            // OLD
-            /*
-            // Everything is good, show the list of chains.
-            if (!mChainList.isEmpty()) {
-                mRecyclerView.setAdapter(new MyChainRecyclerViewAdapter(mChainList, mListener));
-            }
-            */
-            // ***************************************************************
-
-            // ***************************************************************
-            // CHANGED TO
-            // Everything is good, show the list of chains.
             if (!mChainList.isEmpty()) {
 
                 if (mChainDB == null) {
@@ -389,7 +313,6 @@ public class ChainListFragment extends Fragment {
 
                 mRecyclerView.setAdapter(new MyChainRecyclerViewAdapter(mChainList, mListener));
             }
-            // ***************************************************************
         }
 
     }

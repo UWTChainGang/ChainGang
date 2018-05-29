@@ -24,7 +24,12 @@ import java.net.URL;
 import member.Member;
 
 /**
- * The main activity class, takes care for all activities of app
+ * The login activity provides a context for all user account related operations.
+ *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 23 May 2017
  */
 public class LoginActivity extends AppCompatActivity
         implements LoginFragment.OnLoginFragmentInteractionListener,
@@ -34,8 +39,10 @@ public class LoginActivity extends AppCompatActivity
     /**
      * Constant of positive response if a member exists
      */
-    public static final String USER_AUTHENTICATED = "USER_AUTHENTICATED";
     public static final String USER = "USER";
+    /**
+     * the user logging in
+     */
     private Member mMember;
     private String mEmail;
 
@@ -60,19 +67,6 @@ public class LoginActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        // ************************************************************************
-        // ORIGINAL
-        /*
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.login_fragment_container,new LoginFragment())
-                .commit();
-        */
-        // ************************************************************************
-
-        // ************************************************************************
-        // REPLACED to
 
         mSharedPreferences =
                 getSharedPreferences(getString(R.string.LOGIN_PREFS)

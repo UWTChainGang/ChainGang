@@ -18,18 +18,38 @@ import java.util.List;
 import chain.Chain;
 import link.Link;
 
+
 /**
- * Activity to process a member tasks
+ * The main activity for context of ListFragments both Link {@link Link} and
+ * Chain {@link Chain}.
+ *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 20 May 2017
  */
 public class ChainActivity extends AppCompatActivity
         implements ChainListFragment.OnChainListFragmentInteractionListener,
         LinkListFragment.OnLinkListFragmentInteractionListener {
 
+    /**
+     * For Log debugging.
+     */
     public static final String CHAIN_ACTIVITY = "CHAIN_ACTIVITY";
+    /**
+     * Put Extra constant
+     */
     public static final String EXTRA_LINK = "extra_link";
+    /**
+     * Put Extra constant
+     */
     public final static String EXTRA_CHAIN = "extra_chain";
 
+    /**
+     * the Member who the content belongs to.
+     */
     private String mMember;
+
     /**
      * Initialize the ChainList Fragment
      *
@@ -39,6 +59,7 @@ public class ChainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chain);
+        setTitle(R.string.chain_activity_title);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
@@ -100,9 +121,6 @@ public class ChainActivity extends AppCompatActivity
     }
 
 
-    // ************************************************************************
-    // adding logout option
-
     /**
      * Method creates options menu
      *
@@ -139,6 +157,5 @@ public class ChainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    // ************************************************************************
 
 }

@@ -1,29 +1,11 @@
 
-/*
- * Member.java
- *
- * ChainGang <A hub for managing your complex processes>
- * Member class to handle a member status. Class takes care for parsing info about a member from/to
- * a JSON object.
- *
- * Author: Michael Quandt
- * Author: James E Johnston
- * Author: Denis Yakovlev
- * Version: 23 May 2017
- */
 
 package member;
 
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * Member class to handle a member status. Class takes care for parsing info about a member from/to
@@ -77,19 +59,11 @@ public class Member {
      * @param mIsAuthorized initial status
      */
     public Member(String mIsAuthorized) {
-        // *********************
-        // old
-        // this.mStatus = mIsAuthorized;
-        // *********************
-
-        // *********************
-        // new
         if (mIsAuthorized != null) {
             this.mStatus = mIsAuthorized;
         } else {
             throw new NullPointerException("Illegal Argument passed into Member class constructor");
         }
-        // *********************
     }
 
     /**
@@ -100,39 +74,7 @@ public class Member {
      * @throws JSONException complain about JSON object
      */
     public static Member parseMemberJSON(String memberJSON) throws JSONException {
-
-        // *********************
-        // old
-        /*
         String memberStatus = Member.USER_DOES_NOT_EXIST;
-        Log.i("Member","in Parse JSON");
-        if (memberJSON != null) {
-            JSONArray arr = new JSONArray(memberJSON);
-            for (int i = 0; i < arr.length(); i++) {
-                JSONObject obj = arr.getJSONObject(i);
-                memberStatus = obj.getString(Member.STATUS);
-            }
-        }
-        */
-
-        // *********************
-        // new - with memberJSON validation
-        String memberStatus = Member.USER_DOES_NOT_EXIST;
-        Log.i("Member","in Parse JSON");
-/*
-        Log.d("TEST", "**************  00000  ***************");
-        Log.v("memberJSON value: ", memberJSON);
-        boolean testValue = memberJSON != null && isParseMemberJSONArgumentValid(memberJSON);
-        String res = "";
-        if(testValue) {
-            res = "True";
-        } else {
-            res = "False";
-        }
-        Log.v("boolean value: ", res);
-        Log.d("TEST", "**************  00000  ***************");
-*/
-
         if (memberJSON != null && isParseMemberJSONArgumentValid(memberJSON)) {
 
             JSONArray arr = new JSONArray(memberJSON);
@@ -142,21 +84,9 @@ public class Member {
             }
 
         } else {
-//            throw new JSONException("JSON object from server is not valid");
             throw new IllegalArgumentException("JSON object from server is not valid");
         }
-        // *********************
 
-
-
-        // *********************
-        // old
-        // Member member = new Member(memberStatus);
-        // return member;
-        // *********************
-
-        // *********************
-        // new - with member status validation
         if (isStatusNameValid(memberStatus)) {
             Member member = new Member(memberStatus);
             return member;
@@ -164,7 +94,6 @@ public class Member {
             throw new IllegalArgumentException("The parsed from the JSON object value for Member " +
                     "status is not valid.");
         }
-        // *********************
     }
 
 
@@ -184,25 +113,14 @@ public class Member {
      */
     public void setmStatus(String mStatus) {
 
-        // *********************
-        // old
-        // this.mStatus = mStatus;
-        // *********************
-
-        // *********************
-        // new
         if (isStatusNameValid(mStatus)) {
             this.mStatus = mStatus;
         } else {
             throw new IllegalArgumentException("The new given value to set for Member " +
                     "status is not valid.");
         }
-        // *********************
     }
 
-
-    // *********************
-    // ADDED
     /**
      * Checks for appropriate value passed for the member status.
      *
@@ -234,30 +152,11 @@ public class Member {
             return false;
         }
 
-/*
-        Log.d("TEST", "**************  111111  ***************");
-        Log.v("memberJSONtoParse: ", memberJSONtoParse);
-        boolean testValue = memberJSONtoParse.contains("\"STATUS\":\"USER_AUTHENTICATED\"")
-                || memberJSONtoParse.contains("\"STATUS\":\"USER_DOES_NOT_EXIST\"")
-                || memberJSONtoParse.contains("\"STATUS\":\"USER_ALREADY_EXISTS\"")
-                || memberJSONtoParse.contains("\"STATUS\":\"SUCCESS\"");
-        String resParseJSON = "";
-        if(testValue) {
-            resParseJSON = "True";
-        } else {
-            resParseJSON = "False";
-        }
-        Log.v("boolean value: ", resParseJSON);
-        Log.d("TEST", "**************  111111  ***************");
-*/
-
         return (memberJSONtoParse.contains("\"STATUS\":\"USER_AUTHENTICATED\"")
                 || memberJSONtoParse.contains("\"STATUS\":\"USER_DOES_NOT_EXIST\"")
                 || memberJSONtoParse.contains("\"STATUS\":\"USER_ALREADY_EXISTS\"")
                 || memberJSONtoParse.contains("\"STATUS\":\"USER_INVALID_PASSWORD\"")
                 || memberJSONtoParse.contains("\"STATUS\":\"SUCCESS\""));
     }
-
-    // *********************
 
 }

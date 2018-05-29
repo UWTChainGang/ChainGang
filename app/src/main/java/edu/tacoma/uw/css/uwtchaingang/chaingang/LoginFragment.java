@@ -13,7 +13,12 @@ import android.widget.TextView;
 
 
 /**
- * Fragment to handle a member login
+ * Fragment is the app landing for new and restarts.
+ *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 23 May 2017
  */
 public class LoginFragment extends Fragment {
 
@@ -22,6 +27,9 @@ public class LoginFragment extends Fragment {
      */
     private OnLoginFragmentInteractionListener mListener;
 
+    /**
+     * The Terms of Service textview
+     */
     private TextView mTextView;
     /**
      * Required empty public constructor

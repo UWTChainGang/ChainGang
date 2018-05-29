@@ -20,17 +20,18 @@ import static android.support.constraint.Constraints.TAG;
 
 
 /**
- * Fragment to handle add / edit member
+ * Adds a member to the authorized database of members give valid credentials.
+ *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 23 May 2017
  */
 public class MemberAddEditFragment extends Fragment {
 
-    /**
-     * Ad and edit fragment constant
-     */
-    private final static String MEMBER_ADD_EDIT_FRAG = "MemberAddFragment: ";
 
     /**
-     * Database url
+     * Database url to obtain feedback on account creation.
      */
     private final static String MEMEBER_ADD_URL
             = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/users/add/?";

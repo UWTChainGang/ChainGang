@@ -35,13 +35,20 @@ import chain.Chain;
 import link.Link;
 
 import static android.support.constraint.Constraints.TAG;
-
+/**
+ * The Link behavior and its content is handled in the Link class.
+ *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 20 May 2017
+ */
 public class LinkActivity extends AppCompatActivity {
 
     public static final String LINK_ACTIVITY = "LINK_ACTIVITY";
 
     public final static String CHAIN_LINKS_URL =
-            "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/chains/links?";//member=abc@abc.com&chainTitle=Title%20of%20this%20Chain";
+            "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/chains/links?";
 
     public static final String NOTIFY_WARDEN_URL =
             "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/update/link?";
@@ -56,10 +63,10 @@ public class LinkActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_link);
+        setTitle(R.string.link_activity_title);
         Intent intent = getIntent();
         mLink = (Link) intent.getSerializableExtra(ChainActivity.EXTRA_LINK);
         mChain = (Chain) intent.getSerializableExtra(ChainActivity.EXTRA_CHAIN);
-        Log.i(LINK_ACTIVITY, "this link's isComplete" + Boolean.toString(mLink.ismIsCompleted()));
         mTaskCheckerA = (CheckBox) findViewById(R.id.taskCheckerA);
         mTaskCheckerA.setText(mLink.getmLinkInst());
         mExtResA = (TextView) findViewById(R.id.externalResA);
@@ -104,10 +111,9 @@ public class LinkActivity extends AppCompatActivity {
         finish();
     }
     /**
-     * Building the string member url
-     * member=abc@abc.com&chainTitle=Title%20of%20this%20Chain
+     * Building the url to obtain updated links for this member.
      *
-     * @return string with user name and password
+     * @return string with the chain data.
      */
     private String buildLinksURL() {
 
@@ -176,11 +182,6 @@ public class LinkActivity extends AppCompatActivity {
      */
     private class LinkAsyncTask extends AsyncTask<String, Void, String> {
 
-
-        // ***************************************************************
-        //private ChainDB mChainDB;
-        // ***************************************************************
-
         @Override
         protected String doInBackground(String... urls) {
             Log.i("", "Doinbackground");
@@ -239,54 +240,6 @@ public class LinkActivity extends AppCompatActivity {
                         .show();
                 return;
             }
-
-
-            // ***************************************************************
-            // OLD
-            /*
-            // Everything is good, show the list of chains.
-            if (!mChainList.isEmpty()) {
-                mRecyclerView.setAdapter(new MyChainRecyclerViewAdapter(mChainList, mListener));
-            }
-            */
-            // ***************************************************************
-
-            // ***************************************************************
-            // CHANGED TO
-            // Everything is good, show the list of chains.
-
-
-
-
-//            //local storage from ChainListFrag
-//            if (!mChainList.isEmpty()) {
-//
-//                if (mChainDB == null) {
-//                    mChainDB = new ChainDB(getActivity());
-//                }
-//
-//                // Delete old data so that we can refresh the local
-//                // database with the network data.
-//                mChainDB.deleteChains();
-//
-//                // Also, add to the local database
-//                for (int i = 0; i < mChainList.size(); i++) {
-//
-//                    Chain chain = mChainList.get(i);
-//                    mChainDB.insertChain(chain.getmChainID(),
-//                            chain.getmChainTitle(),
-//                            chain.getmChainDesc(),
-//                            chain.getmWardenID(),
-//                            chain.getmMemberID());
-//
-//                }
-//
-//                mRecyclerView.setAdapter(new MyChainRecyclerViewAdapter(mChainList, mListener));
-//            }
-
-
-
-            // ***************************************************************
         }
 
     }
@@ -296,10 +249,6 @@ public class LinkActivity extends AppCompatActivity {
      */
     private class NotifyAsyncTask extends AsyncTask<String, Void, String> {
 
-
-        // ***************************************************************
-        //private ChainDB mChainDB;
-        // ***************************************************************
 
         @Override
         protected String doInBackground(String... urls) {
@@ -354,53 +303,6 @@ public class LinkActivity extends AppCompatActivity {
             linkAsyncTask.execute(new String[]{linksURL});
             return;
 
-
-            // ***************************************************************
-            // OLD
-            /*
-            // Everything is good, show the list of chains.
-            if (!mChainList.isEmpty()) {
-                mRecyclerView.setAdapter(new MyChainRecyclerViewAdapter(mChainList, mListener));
-            }
-            */
-            // ***************************************************************
-
-            // ***************************************************************
-            // CHANGED TO
-            // Everything is good, show the list of chains.
-
-
-
-
-//            //local storage from ChainListFrag
-//            if (!mChainList.isEmpty()) {
-//
-//                if (mChainDB == null) {
-//                    mChainDB = new ChainDB(getActivity());
-//                }
-//
-//                // Delete old data so that we can refresh the local
-//                // database with the network data.
-//                mChainDB.deleteChains();
-//
-//                // Also, add to the local database
-//                for (int i = 0; i < mChainList.size(); i++) {
-//
-//                    Chain chain = mChainList.get(i);
-//                    mChainDB.insertChain(chain.getmChainID(),
-//                            chain.getmChainTitle(),
-//                            chain.getmChainDesc(),
-//                            chain.getmWardenID(),
-//                            chain.getmMemberID());
-//
-//                }
-//
-//                mRecyclerView.setAdapter(new MyChainRecyclerViewAdapter(mChainList, mListener));
-//            }
-
-
-
-            // ***************************************************************
         }
 
     }

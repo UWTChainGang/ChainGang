@@ -1,15 +1,4 @@
 
-/*
- * ChainDB.java
- *
- * ChainGang <A hub for managing your complex processes>
- * Class to handle SQLite database for storing data, retrieved from a server
- *
- * Author: Michael Quandt
- * Author: James E Johnston
- * Author: Denis Yakovlev
- * Version: 20 May 2017
- */
 
 package data;
 

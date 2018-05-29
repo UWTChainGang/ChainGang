@@ -11,8 +11,14 @@ import edu.tacoma.uw.css.uwtchaingang.chaingang.ChainListFragment.OnChainListFra
 
 import java.util.List;
 
+
 /**
+ * For recycling the Chain objects in the ChainListFragment.
  *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 23 May 2017
  */
 public class MyChainRecyclerViewAdapter extends RecyclerView.Adapter<MyChainRecyclerViewAdapter.ViewHolder> {
 
