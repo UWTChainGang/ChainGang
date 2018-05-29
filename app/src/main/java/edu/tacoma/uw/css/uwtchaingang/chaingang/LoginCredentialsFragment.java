@@ -125,8 +125,8 @@ public class LoginCredentialsFragment extends Fragment {
                             ,Toast.LENGTH_SHORT)
                             .show();
                     mMemberEmail.requestFocus();
-                } else if (TextUtils.isEmpty(password) || password.length() < 6) {
-                    Toast.makeText(v.getContext(), "Enter valid password (at least 6 characters)"
+                } else if (TextUtils.isEmpty(password) || password.length() < 8) {
+                    Toast.makeText(v.getContext(), "Enter valid password (at least 8 characters)"
                             ,Toast.LENGTH_SHORT)
                             .show();
                     mMemberPassword.requestFocus();
