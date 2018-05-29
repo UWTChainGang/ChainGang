@@ -130,7 +130,7 @@ public class MemberAddEditFragment extends Fragment {
                 }
             }
         });
-
+        getActivity().setTitle("Register: ");
         return view;
     }
 

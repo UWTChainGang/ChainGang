@@ -1,6 +1,7 @@
 package edu.tacoma.uw.css.uwtchaingang.chaingang;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -53,7 +54,7 @@ public class ChainListFragment extends Fragment {
     /**
      * Link to the chain table in the database
      */
-    private static final String CHAINURL = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/chains?";//member=ab@ab.com";
+    private static final String CHAINURL = "http://chaingangwebservice.us-west-2.elasticbeanstalk.com/chains?";
 
     /**
      * Column counter initializer
@@ -112,7 +113,6 @@ public class ChainListFragment extends Fragment {
         Log.i("ChainListFragment", "onCreate Called from class: ChainListFragment.java");
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-            //Log.i("CHAINLISTFRAGMENT",getArguments().getString("USER"));
         }
     }
 
@@ -133,7 +133,6 @@ public class ChainListFragment extends Fragment {
 
         Bundle bundle = getArguments();
 
-        Log.i("CHAINLISTFRAGMENT",bundle.toString());
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -208,10 +207,11 @@ public class ChainListFragment extends Fragment {
         StringBuilder sb = new StringBuilder(CHAINURL);
 
         try {
-
+            // use shared prefs first then email param as a backup
+            SharedPreferences sharedPref = getActivity().getSharedPreferences("user_id",Context.MODE_PRIVATE);
+            String memberEmail = sharedPref.getString("memberEmail", email);
             sb.append("member=");
-            sb.append(URLEncoder.encode(email, "UTF-8"));
-
+            sb.append(URLEncoder.encode(memberEmail, "UTF-8"));
 
         }
         catch(Exception e) {
