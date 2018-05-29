@@ -13,12 +13,26 @@ import java.util.List;
 import chain.Chain;
 
 /**
- * Creating a link between chains
+ * The context of a Link is represented by the attributes of this class.
+ *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 23 May 2017
  */
 public  class Link implements Serializable {
 
+    /**
+     * Logcat Debugging constant
+     */
     public static final String LINK_CLASS = "LINK_CLASS";
+    /**
+     * External URL key for value acquisition
+     */
     public static final String EXT_URL = "externalURL";
+    /**
+     * External URL cite name key for value acquisition
+     */
     public static final String EXT_URL_NAME = "siteName";
     /**
      * Chain link constant
@@ -59,10 +73,14 @@ public  class Link implements Serializable {
      */
     private String mLinkInst;
 
-
+    /**
+     * the External URL String
+     */
     private String mExtURL;
 
-
+    /**
+     * The site name of External URL
+     */
     private String mExtSiteName;
 
 
@@ -125,14 +143,9 @@ public  class Link implements Serializable {
         return mIsCompleted;
     }
 
-//    public int getLinkId() {
-//        return mLinkID;
-//    }
-
     public String getmExtSiteName() {
         return mExtSiteName;
     }
-
     public void setmExtSiteName(String mExtSiteName) {
         this.mExtSiteName = mExtSiteName;
     }
@@ -141,7 +154,6 @@ public  class Link implements Serializable {
     public String getmExtURL() {
         return mExtURL;
     }
-
     public void setmExtURL(String mExtURL) {
         this.mExtURL = mExtURL;
     }
@@ -149,7 +161,6 @@ public  class Link implements Serializable {
     public int getmLinkID() {
         return mLinkID;
     }
-
     public void setmLinkID(int mLinkID) {
         this.mLinkID = mLinkID;
     }
@@ -157,7 +168,6 @@ public  class Link implements Serializable {
     public String getmLinkText() {
         return mLinkText;
     }
-
     public void setmLinkText(String mLinkText) {
         this.mLinkText = mLinkText;
     }
@@ -165,7 +175,6 @@ public  class Link implements Serializable {
     public String getmLinkInst() {
         return mLinkInst;
     }
-
     public void setmLinkInst(String mLinkInst) {
         this.mLinkInst = mLinkInst;
     }

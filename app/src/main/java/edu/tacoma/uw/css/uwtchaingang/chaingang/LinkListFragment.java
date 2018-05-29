@@ -35,28 +35,35 @@ import link.Link;
 import static android.support.constraint.Constraints.TAG;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnLinkListFragmentInteractionListener}
- * interface.
+ * A fragment containing Link Items
+ *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 20 May 2017
  */
 public class LinkListFragment extends Fragment {
 
 
-    public final static String LINK_LIST_FRAGMENT = "LINK_LIST_FRAGMENT";
+    /**
+     * Constant used a Key for value of a selected chain.
+     */
     public final static String CHAIN_SELECTED = "chain_selected";
     public final static String LINK_SELECTED = "link_selected";
 
     private static final String ARG_COLUMN_COUNT = "column-count";
 
     private int mColumnCount = 1;
+    /**
+     * The listener for Link interaction.
+     */
     private OnLinkListFragmentInteractionListener mListener;
-    //private List<Link> mLinkList;
     private RecyclerView mRecylcerView;
 
-
+    /**
+     * The current chain belonging to this Member
+     */
     private Chain mChain;
-    private Set<String> mCompletedIds;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -64,8 +71,7 @@ public class LinkListFragment extends Fragment {
     public LinkListFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
+
     public static LinkListFragment newInstance(int columnCount) {
         LinkListFragment fragment = new LinkListFragment();
         Bundle args = new Bundle();
@@ -78,7 +84,6 @@ public class LinkListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mCompletedIds = new HashSet<String>();
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             mChain = (Chain) getArguments().get(CHAIN_SELECTED);
 
@@ -90,20 +95,18 @@ public class LinkListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_link_list, container, false);
-
+        getActivity().setTitle("CHAIN:");
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            mRecylcerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                mRecylcerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                mRecylcerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-
-            Log.i(LINK_LIST_FRAGMENT, "next link's isComplete" + Boolean.toString(mChain.getMchainsInLink().get(2).ismIsCompleted()));
-            recyclerView.setAdapter(new MyLinkRecyclerViewAdapter(mChain, mListener));
+            mRecylcerView.setAdapter(new MyLinkRecyclerViewAdapter(mChain, mListener));
         }
         return view;
     }
@@ -134,10 +137,7 @@ public class LinkListFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     *
      */
     public interface OnLinkListFragmentInteractionListener {
         void onLinkSelected(Link theLink, Chain theChain);

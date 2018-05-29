@@ -29,7 +29,12 @@ import static android.support.constraint.Constraints.TAG;
 
 
 /**
- * Fragment to handle login credentials.
+ * Fragment that receives member login credentials
+ *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 23 May 2017
  */
 public class LoginCredentialsFragment extends Fragment {
 
@@ -131,33 +136,14 @@ public class LoginCredentialsFragment extends Fragment {
                             .show();
                     mMemberPassword.requestFocus();
                 } else {
-                    //mListener.validateCredentials(buildMemberURL(v));//TODO: maybe email
                     mListener.validateCredentials(buildMemberURL(v), email);
                 }
 
-                // ************************************************************************
-
-
-                /*
-                mListener.validateCredentials(buildMemberURL(v));
-
-                replaced by
-
-                } else {
-                    mListener.validateCredentials(buildMemberURL(v));
-                }
-
-                from above
-
-                */
             }
         });
 
-
-        // ************************************************************************
-        // fragment title changed to "Login"
         getActivity().setTitle("Login");
-        // ************************************************************************
+
 
         return view;
     }
@@ -219,7 +205,7 @@ public class LoginCredentialsFragment extends Fragment {
     }
 
     /**
-     * Interface to handle interaction events
+     * Interface to handle interaction events with the login credentials
      */
     public interface OnLoginCredentialsFragmentInteractionListener {
 

@@ -48,17 +48,6 @@
         android:layout_height="1dp"
         android:background="?android:attr/listDivider" />
 
-    <EditText
-        android:id="@+id/editLinkNotes"
-        android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:ems="10"
-        android:lines="8"
-        android:minLines= "6"
-        android:maxLines="10"
-        android:inputType="textMultiLine"
-        android:hint="@string/link_notes" />
-
     <View
         android:id="@+id/divider3"
         android:layout_width="match_parent"
@@ -71,4 +60,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:text="@string/complete_link" />
+
 </LinearLayout>

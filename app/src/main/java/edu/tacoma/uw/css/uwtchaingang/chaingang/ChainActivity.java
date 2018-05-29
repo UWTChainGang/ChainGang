@@ -18,16 +18,37 @@ import java.util.List;
 import chain.Chain;
 import link.Link;
 
+
 /**
- * Activity to process a member tasks
+ * The main activity for context of ListFragments both Link {@link Link} and
+ * Chain {@link Chain}.
+ *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 20 May 2017
  */
 public class ChainActivity extends AppCompatActivity
         implements ChainListFragment.OnChainListFragmentInteractionListener,
         LinkListFragment.OnLinkListFragmentInteractionListener {
 
+    /**
+     * For Log debugging.
+     */
     public static final String CHAIN_ACTIVITY = "CHAIN_ACTIVITY";
+    /**
+     * Put Extra constant
+     */
     public static final String EXTRA_LINK = "extra_link";
+    /**
+     * Put Extra constant
+     */
     public final static String EXTRA_CHAIN = "extra_chain";
+
+    /**
+     * the Member who the content belongs to.
+     */
+    private String mMember;
 
     /**
      * Initialize the ChainList Fragment
@@ -38,12 +59,13 @@ public class ChainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chain);
+        setTitle(R.string.chain_activity_title);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
-        //Log.i(CHAIN_ACTIVITY,intent.getStringExtra("USER"));
+        mMember = intent.getStringExtra("USER");
+        // Populate the Links
         if (intent.getSerializableExtra(ChainListFragment.CHAIN_SELECTED) != null) {
-            Log.i(CHAIN_ACTIVITY, "new chain should be here");
             Chain chain = (Chain) intent.getSerializableExtra(ChainListFragment.CHAIN_SELECTED);
             LinkListFragment linkListFragment = new LinkListFragment();
             Bundle args = new Bundle();
@@ -51,10 +73,9 @@ public class ChainActivity extends AppCompatActivity
             linkListFragment.setArguments(args);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.chain_container, linkListFragment)
-                    //.addToBackStack(null)
                     .commit();
-        } else {
-            //Log.i(CHAIN_ACTIVITY,intent.getStringExtra("USER"));
+
+        } else {            //populate the chains
             ChainListFragment chainListFragment = new ChainListFragment();
             Bundle args = new Bundle();
             args.putString("USER", intent.getStringExtra("USER"));
@@ -64,6 +85,7 @@ public class ChainActivity extends AppCompatActivity
                     .commit();
         }
     }
+
 
     /**
      * Implementation of OnChainListFragmentInteractionListener interface
@@ -80,7 +102,6 @@ public class ChainActivity extends AppCompatActivity
                 .replace(R.id.chain_container, linkListFragment)
                 .addToBackStack(null)
                 .commit();
-
     }
 
     /**
@@ -93,14 +114,10 @@ public class ChainActivity extends AppCompatActivity
         Intent intent = new Intent(this, LinkActivity.class);
         intent.putExtra(EXTRA_LINK, theLink);
         intent.putExtra(EXTRA_CHAIN, theChain);
-        Log.i(CHAIN_ACTIVITY, "link ID: " + theLink.getmLinkID());
+        getSupportFragmentManager().popBackStackImmediate();
         startActivity(intent);
-
     }
 
-
-    // ************************************************************************
-    // adding logout option
 
     /**
      * Method creates options menu
@@ -138,6 +155,5 @@ public class ChainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    // ************************************************************************
 
 }

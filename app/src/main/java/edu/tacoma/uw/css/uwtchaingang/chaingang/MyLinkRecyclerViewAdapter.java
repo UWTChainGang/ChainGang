@@ -12,7 +12,14 @@ import link.Link;
 
 import java.util.List;
 
-
+/**
+ * For recycling the link objects in the LinkListFragment.
+ *
+ * @author Michael Quandt
+ * @author James E Johnston
+ * @author Denis Yakovlev
+ * @version 23 May 2017
+ */
 public class MyLinkRecyclerViewAdapter extends RecyclerView.Adapter<MyLinkRecyclerViewAdapter.ViewHolder> {
 
     private final Chain mChain;
@@ -40,7 +47,6 @@ public class MyLinkRecyclerViewAdapter extends RecyclerView.Adapter<MyLinkRecycl
         } else {
             isCompleteable = "  LOCKED: ";
         }
-        //holder.mContentView.setText(Boolean.toString(mChain.getMchainsInLink().get(position).ismIsCompleted()));
         holder.mContentView.setText(isCompleteable);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
