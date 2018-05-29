@@ -36,9 +36,11 @@
     <string name="LOGIN_PREFS">edu.tacoma.uw.css.uwtchaingang.chaingang.PREFS</string>
     <string name="LOGGEDIN">loggedin</string>
     <string name="action_logout">Logout</string>
+    <string name="action_chain_back">Back To Chains</string>
     - <!--  *************************************************** -->
     <string name="chain_activity_title">My Chains: </string>
     <string name="link_activity_title">LINK: </string>
+    <string name="back_to_links">BACK TO LINKS</string>
 
 </resources>
 

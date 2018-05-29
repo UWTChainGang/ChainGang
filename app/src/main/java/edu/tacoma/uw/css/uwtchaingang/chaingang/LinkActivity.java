@@ -96,7 +96,7 @@ public class LinkActivity extends AppCompatActivity {
                             String notifyURL = buildNotifyWardenURL();
                             NotifyAsyncTask notifyAsync = new NotifyAsyncTask();
                             notifyAsync.execute(new String[]{notifyURL});
-
+                            getSupportFragmentManager().popBackStackImmediate();
                         }
                     }
                 }

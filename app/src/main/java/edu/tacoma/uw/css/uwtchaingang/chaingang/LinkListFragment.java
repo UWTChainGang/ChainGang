@@ -95,7 +95,7 @@ public class LinkListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_link_list, container, false);
-
+        getActivity().setTitle("CHAIN:");
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
