@@ -45,6 +45,10 @@ public class Member {
      * Constant of positive response if a member exists
      */
     public static final String USER_AUTHENTICATED = "USER_AUTHENTICATED";
+    /**
+     * Constant of positive response if a member exists
+     */
+    public static final String USER_INVALID_PASSWORD = "USER_INVALID_PASSWORD";
 
     /**
      * Constant of negative response if a member does not exists
@@ -214,6 +218,7 @@ public class Member {
         return (statusNameToVerify.equals(USER_AUTHENTICATED)
                 || statusNameToVerify.equals(USER_DOES_NOT_EXIST)
                 || statusNameToVerify.equals(USER_ALREADY_EXISTS)
+                || statusNameToVerify.equals(USER_INVALID_PASSWORD)
                 || statusNameToVerify.equals(SUCCESS));
     }
 
@@ -249,6 +254,7 @@ public class Member {
         return (memberJSONtoParse.contains("\"STATUS\":\"USER_AUTHENTICATED\"")
                 || memberJSONtoParse.contains("\"STATUS\":\"USER_DOES_NOT_EXIST\"")
                 || memberJSONtoParse.contains("\"STATUS\":\"USER_ALREADY_EXISTS\"")
+                || memberJSONtoParse.contains("\"STATUS\":\"USER_INVALID_PASSWORD\"")
                 || memberJSONtoParse.contains("\"STATUS\":\"SUCCESS\""));
     }
 

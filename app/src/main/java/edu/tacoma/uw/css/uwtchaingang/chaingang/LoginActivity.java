@@ -137,9 +137,10 @@ public class LoginActivity extends AppCompatActivity
     }
 
     /**
-     * Validate a member credentials
+     * Validate a member credentials with the webservice after app-side validation.
      *
      * @param url a member input data
+     * @param email the identifier used to make unique chains.
      */
     @Override
     public void validateCredentials(String url, String email) {
@@ -154,8 +155,6 @@ public class LoginActivity extends AppCompatActivity
      * Class to authenticate a member, synchronize with the member database
      */
     private class AuthenticateMemberTask extends AsyncTask<String, Void, String> {
-
-
         /**
          * Call for super method onPreExecute()
          */
@@ -163,7 +162,6 @@ public class LoginActivity extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
         }
-
         /**
          * Setup a connection with the URL(Network)
          *
@@ -186,7 +184,6 @@ public class LoginActivity extends AppCompatActivity
                     while ((s = buffer.readLine()) != null) {
                         response += s;
                     }
-
                 } catch (Exception e) {
                     response = "Unable to authenticate Member. Reason: "
                             + e.getMessage();
@@ -194,37 +191,32 @@ public class LoginActivity extends AppCompatActivity
                     if (urlConnection != null)
                         urlConnection.disconnect();
                 }
-
             }
             return response;
         }
 
         /**
-         * It checks if credentials are correct
+         * It checks if credentials are correct and responds accordingly.
          *
-         * @param result
+         * @param result the JSON obtained from the webservice.
          */
         @Override
         protected void onPostExecute(String result) {
+            Log.i("postLogin", result);
             try {
                 mMember = Member.parseMemberJSON(result);
                 if (mMember.getmStatus().equals(Member.USER_AUTHENTICATED)) {
-                    Toast.makeText(getApplicationContext(), Member.USER_AUTHENTICATED
+                    Toast.makeText(getApplicationContext(), "User Authenticated "
                             , Toast.LENGTH_LONG)
                             .show();
-
-                    // ************************************************************************
-                    // store info in the file that a member credentials were validated
-                    mSharedPreferences
-                            .edit()
-                            .putBoolean(getString(R.string.LOGGEDIN), true)
-                            .commit();
-                    // ************************************************************************
-
-
                     launchChains();
                 } else if (mMember.getmStatus().equals(Member.USER_DOES_NOT_EXIST)){
                     Toast.makeText(getApplicationContext(), "Member Does Not Exist "
+                            , Toast.LENGTH_LONG)
+                            .show();
+                    launchLoginCredentials();
+                } else if (mMember.getmStatus().equals(Member.USER_INVALID_PASSWORD)){
+                    Toast.makeText(getApplicationContext(), "Invalid Password "
                             , Toast.LENGTH_LONG)
                             .show();
                     launchLoginCredentials();
@@ -232,17 +224,7 @@ public class LoginActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "Account Created "
                             , Toast.LENGTH_LONG)
                             .show();
-
-
-                    // ************************************************************************
-                    // OLD
                     launchLoginCredentials();
-
-                    // NEW
-                    //launchChains();
-                    // ************************************************************************
-
-
                 } else if (mMember.getmStatus().equals((Member.USER_ALREADY_EXISTS))) {
                     Toast.makeText(getApplicationContext(), "Email already in use "
                             , Toast.LENGTH_LONG)

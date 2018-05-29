@@ -29,6 +29,7 @@ public class ChainActivity extends AppCompatActivity
     public static final String EXTRA_LINK = "extra_link";
     public final static String EXTRA_CHAIN = "extra_chain";
 
+    private String mMember;
     /**
      * Initialize the ChainList Fragment
      *
@@ -41,9 +42,9 @@ public class ChainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
-        //Log.i(CHAIN_ACTIVITY,intent.getStringExtra("USER"));
+        mMember = intent.getStringExtra("USER");
+        // Populate the Links
         if (intent.getSerializableExtra(ChainListFragment.CHAIN_SELECTED) != null) {
-            Log.i(CHAIN_ACTIVITY, "new chain should be here");
             Chain chain = (Chain) intent.getSerializableExtra(ChainListFragment.CHAIN_SELECTED);
             LinkListFragment linkListFragment = new LinkListFragment();
             Bundle args = new Bundle();
@@ -51,10 +52,9 @@ public class ChainActivity extends AppCompatActivity
             linkListFragment.setArguments(args);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.chain_container, linkListFragment)
-                    //.addToBackStack(null)
                     .commit();
-        } else {
-            //Log.i(CHAIN_ACTIVITY,intent.getStringExtra("USER"));
+
+        } else {            //populate the chains
             ChainListFragment chainListFragment = new ChainListFragment();
             Bundle args = new Bundle();
             args.putString("USER", intent.getStringExtra("USER"));
@@ -64,6 +64,7 @@ public class ChainActivity extends AppCompatActivity
                     .commit();
         }
     }
+
 
     /**
      * Implementation of OnChainListFragmentInteractionListener interface
