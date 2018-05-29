@@ -125,6 +125,10 @@ public class LoginActivity extends AppCompatActivity
      */
     @Override
     public void launchChains() {
+        SharedPreferences sharedPref = getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("memberEmail", mEmail);
+        editor.commit();
         Intent intent = new Intent(this, ChainActivity.class);
         intent.putExtra(USER, mEmail);
         startActivity(intent);
@@ -203,6 +207,7 @@ public class LoginActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "User Authenticated "
                             , Toast.LENGTH_LONG)
                             .show();
+
                     launchChains();
                 } else if (mMember.getmStatus().equals(Member.USER_DOES_NOT_EXIST)){
                     Toast.makeText(getApplicationContext(), "Member Does Not Exist "

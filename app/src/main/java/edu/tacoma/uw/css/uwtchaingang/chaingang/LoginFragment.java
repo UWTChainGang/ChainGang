@@ -100,7 +100,7 @@ public class LoginFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        getActivity().setTitle("Welcome");
         return view;
     }
 

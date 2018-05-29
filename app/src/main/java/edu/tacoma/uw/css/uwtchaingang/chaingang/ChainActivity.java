@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -114,8 +113,8 @@ public class ChainActivity extends AppCompatActivity
         Intent intent = new Intent(this, LinkActivity.class);
         intent.putExtra(EXTRA_LINK, theLink);
         intent.putExtra(EXTRA_CHAIN, theChain);
-        getSupportFragmentManager().popBackStackImmediate();
         startActivity(intent);
+        getSupportFragmentManager().popBackStackImmediate();
     }
 
 
@@ -150,6 +149,13 @@ public class ChainActivity extends AppCompatActivity
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
+        }
+        if (item.getItemId() == R.id.action_to_chains) {
+            SharedPreferences sharedPref = getSharedPreferences("user_id",Context.MODE_PRIVATE);
+            String memberEmail = sharedPref.getString("memberEmail", mMember);
+            Intent intent = new Intent(this, ChainActivity.class);
+            intent.putExtra("USER", memberEmail);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
