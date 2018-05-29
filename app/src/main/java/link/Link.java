@@ -117,15 +117,17 @@ public  class Link implements Serializable {
         }
         return linkList;
     }
+
     public void setmIsCompleted(boolean mIsCompleted) {
         this.mIsCompleted = mIsCompleted;
     }
     public boolean ismIsCompleted() {
         return mIsCompleted;
     }
-    public int getLinkId() {
-        return mLinkID;
-    }
+
+//    public int getLinkId() {
+//        return mLinkID;
+//    }
 
     public String getmExtSiteName() {
         return mExtSiteName;
@@ -142,21 +144,6 @@ public  class Link implements Serializable {
 
     public void setmExtURL(String mExtURL) {
         this.mExtURL = mExtURL;
-    }
-    public String getLINK_ID() {
-        return LINK_ID;
-    }
-
-    public String getLINK_TEXT() {
-        return LINK_TEXT;
-    }
-
-    public String getLINK_INST() {
-        return LINK_INST;
-    }
-
-    public String getIS_COMPLETED() {
-        return IS_COMPLETED;
     }
 
     public int getmLinkID() {
