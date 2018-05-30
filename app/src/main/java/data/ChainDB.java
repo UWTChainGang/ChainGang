@@ -70,17 +70,7 @@ public class ChainDB {
     //     * @param linkArray
      * @return
      */
-  /*
-    public boolean insertChain(String _id,
-                               String chainTitle,
-                               String chainDesc,
-                               String warden,
-                               String member,
-                               int isChainCompleted,
-                               String dtg_Created,
-                               String dtg_LastUpdated,
-                               String linkArray) {
-*/
+
     public boolean insertChain(String _id,
                                String chainTitle,
                                String chainDesc,
@@ -91,13 +81,6 @@ public class ChainDB {
         contentValues.put("chainTitle", chainTitle);
         contentValues.put("chainDesc", chainDesc);
         contentValues.put("member", member);
-/*
-        contentValues.put("isChainCompleted", isChainCompleted);
-        contentValues.put("dtg_Created", dtg_Created);
-        contentValues.put("dtg_LastUpdated", dtg_LastUpdated);
-        contentValues.put("linkArray", linkArray);
-*/
-
         long rowId = mSQliteDatabase.insert("Chain", null, contentValues);
         return rowId != -1;
     }

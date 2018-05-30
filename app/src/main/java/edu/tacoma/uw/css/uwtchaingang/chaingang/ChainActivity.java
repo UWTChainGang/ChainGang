@@ -114,7 +114,6 @@ public class ChainActivity extends AppCompatActivity
         intent.putExtra(EXTRA_LINK, theLink);
         intent.putExtra(EXTRA_CHAIN, theChain);
         startActivity(intent);
-        getSupportFragmentManager().popBackStackImmediate();
     }
 
 
