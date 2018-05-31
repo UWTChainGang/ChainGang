@@ -39,6 +39,7 @@ public class ChainActivity extends AppCompatActivity
      * Put Extra constant
      */
     public static final String EXTRA_LINK = "extra_link";
+
     /**
      * Put Extra constant
      */

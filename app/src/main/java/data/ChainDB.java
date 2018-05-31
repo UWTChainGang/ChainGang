@@ -44,6 +44,9 @@ public class ChainDB {
      */
     private SQLiteDatabase mSQliteDatabase;
 
+    /**
+     * Chain constant
+     */
     private static final String CHAIN_TABLE = "Chain";
 
     /**

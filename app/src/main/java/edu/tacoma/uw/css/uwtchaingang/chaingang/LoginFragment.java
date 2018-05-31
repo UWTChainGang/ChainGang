@@ -31,6 +31,7 @@ public class LoginFragment extends Fragment {
      * The Terms of Service textview
      */
     private TextView mTextView;
+
     /**
      * Required empty public constructor
      */
