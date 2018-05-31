@@ -83,8 +83,6 @@ public  class Link implements Serializable {
      */
     private String mExtSiteName;
 
-
-
     /**
      * Initial flag if it's the last chain
      */

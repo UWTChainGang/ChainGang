@@ -40,10 +40,15 @@ public class LoginActivity extends AppCompatActivity
      * Constant of positive response if a member exists
      */
     public static final String USER = "USER";
+
     /**
-     * the user logging in
+     * Variable to keep the user logging in
      */
     private Member mMember;
+
+    /**
+     * The member's email
+     */
     private String mEmail;
 
     /**
@@ -51,12 +56,10 @@ public class LoginActivity extends AppCompatActivity
      */
     private final static String LOGIN_ACTIVITY = "LoginActivity: ";
 
-    // ************************************************************************
     /**
      * Variable to handle local storing of a member credentials
      */
     private SharedPreferences mSharedPreferences;
-    // ************************************************************************
 
     /**
      * Call for the login fragment
@@ -80,8 +83,6 @@ public class LoginActivity extends AppCompatActivity
         } else {
             launchChains();
         }
-
-        // ************************************************************************
     }
 
     /**
